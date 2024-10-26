@@ -2,14 +2,14 @@ export default function Header(){
     return <div> 
        <div className="bg-gray-100   py-2">
        <div className="w-[85%] m-auto flex items-center justify-between">
-       <div className="flex items-center gap-5 text-sm">
+       <div className="flex items-center gap-5 text-[12px]">
             <a href="#" className="hover:underline">Haqqımızda</a>
             <a href="#" className="hover:underline">Müştəri xidmətləri</a>
             <a href="#" className="hover:underline">Bloq</a>
         </div>
         <div>
             <form>
-                <select className="bg-gray-100 text-sm cursor-pointer">
+                <select className="bg-gray-100 text-[12px] cursor-pointer">
                     <option>AZ</option>
                     <option>EN</option>
                     <option>RU</option>

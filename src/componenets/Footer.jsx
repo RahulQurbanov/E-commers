@@ -11,7 +11,7 @@ export default function Footer(){
                     <p className="text-gray-400">Bizi izləyin</p>
                     <p className="pb-3">__</p>
                     </div>
-                    <div className="flex items-center gap-7">
+                    <div className="flex items-center gap-7 pb-[15px]">
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
                     <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -47,7 +47,7 @@ export default function Footer(){
             <div className="flex flex-col gap-9">
             <div className="flex items-center gap-2">
             <i class="fa-regular fa-envelope text-2xl"></i>
-            <a href="#"><p className="text-sm font-bold hover:underline">help@mybrands.az</p></a>
+            <a href="#"><p className="text-sm font-bold hover:underline m-0">help@mybrands.az</p></a>
             </div>
             <div>
                 <h2 className="text-lg font-bold hover:underline cursor-pointer">+994504114114</h2>
