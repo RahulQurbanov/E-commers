@@ -1,3 +1,4 @@
+import Catagory from "./componenets/Catagory"
 import Footer from "./componenets/Footer"
 import Header from "./componenets/Header"
 import Login from "./componenets/Login"
@@ -7,8 +8,9 @@ function App() {
 
   return <div>
     <Header></Header>
-    {/* <Main></Main> */}
-    <Login></Login>
+    <Catagory></Catagory>
+    <Main></Main>
+    {/* <Login></Login> */}
     <Footer></Footer>
   </div>
    
