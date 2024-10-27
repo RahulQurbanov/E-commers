@@ -7,10 +7,21 @@ export default function Login(){
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const months =['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'İyun','İyul', 'Avqust', 'Sentyabr', 'Oktyabr', 'Noyabr', 'Dekabr']
     const years = Array.from({length: 100}, (_, i)=>new Date().getFullYear() - i);
+
+    const [mybrands, setMyBrands] = useState(false);
+    const [email, setEmail] = useState(true);
+    function getMyBrands(){
+        setMyBrands(true);
+        setEmail(false);
+    }
+    function getEmail(){
+        setEmail(true);
+        setMyBrands(false);
+    }
     return <div className="bg-gray-100 flex items-center justify-center">
         <div className="w-[40%] m-auto bg-white px-10 py-5 my-10 ">
         <div className="flex justify-center items-center text-lg cursor-pointer w-[100%]">
-            <p className="bg-cyn-950 py-4 px-[70px] text-whte">Daxil olun</p>
+            <p className="bg-cyan-950 py-4 px-[70px] text-white">Daxil olun</p>
             <p className="bg-cyan-950 py-4 px-[70px] text-white">Qeydiyyatdan keçin</p>
         </div>
         <div>
@@ -18,11 +29,13 @@ export default function Login(){
                 <h1 className="text-3xl font-bold">Qoşulun</h1>
            </div>
             <div className="flex justify-center items-center text-lg cursor-pointer mt-7">
-                <p className="bg-cyan-950 py-4 px-[62px] text-white">e-poçt ilə</p>
-                <p className="bg-cyn-950 py-4 px-[62px] text-whte">Mybrands kartı ilə</p>
+                <p className={email?"bg-cyan-950 py-4 px-[62px] text-white":"text-black bg-white py-4 px-[62px]"} onClick={getEmail}>e-poçt ilə</p>
+                <p className={mybrands?"bg-cyan-950 py-4 px-[62px] text-white":"text-black bg-white py-4 px-[62px]"} onClick={getMyBrands}>Mybrands kartı ilə</p>
             </div>
             <div className="w-[77%] flex flex-col m-auto gap-5 text-black mt-5">
-                {/* <input type="text" placeholder="Email adress" className="p-3 w-[100%] border-2 border-slate-200" />
+                {email &&
+                <>
+                   <input type="text" placeholder="Email adress" className="p-3 w-[100%] border-2 border-slate-200" />
                 <input type="text" value={"+994"} className="p-3 w-[100%] border-2 border-slate-200" />
                 <div className="flex gap-5">
                     <input type="text" placeholder="Ad" className="p-3 w-[100%] border-2 border-slate-200" />
@@ -71,8 +84,11 @@ export default function Login(){
                     <label htmlFor="">Qadın</label>
                     </div>
                 </div>
-            </div> */}
-             <div className="flex justify-center items-center flex-col w-[100%] m-auto">
+            </div>
+                </>
+                }
+             {mybrands &&
+                <div className="flex justify-center items-center flex-col w-[100%] m-auto">
                 <div className="flex text-xl mt-10">
                 <p className="border-b-black border-b-2 px-7">BONUS KARTI İLƏ</p>
                 <p className="border-b-gray-200 border-b-2 px-7">NÖMRƏ İLƏ</p>
@@ -83,7 +99,7 @@ export default function Login(){
                    <input type="password" placeholder="Şifrəni təsdiq edin" className="w-[100%] p-3 border-2 border-slate-200" />
                    <input type="text" placeholder="Bonus kartının nömrəsi" className="w-[100%] p-3 border-2 border-slate-200 mb-5" />
                 </div> 
-            </div> 
+            </div> }
             <div className="w-[100%] m-auto">
                 <span className="text-[13px]">Hesab yaratmaqla bizim <span className="underline cursor-pointer">Şərt və Qaydalarımızı</span> & <span className="underline cursor-pointer">Məxfilik  siyasətimiz</span>i qəbul edirsiniz.</span>
             </div>
