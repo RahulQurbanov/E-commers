@@ -24,10 +24,10 @@ export default function Header(){
             <div className="mr-[35px]">
                 <img src="./src/image/MBlogo.webp" alt="" className="w-[200px]"/>
             </div>
-            <div className="text-lg flex items-center  gap-3 cursor-pointer ">
-                <h2 className="border-l-gray-300 border-r-2 pr-[10px] hover:underline">Kişilər</h2>
-                <h2 className="border-l-gray-300 border-r-2 pr-[10px] hover:underline">Qadınlar</h2>
-                <h2 className="hover:underline ">Uşaqlar</h2>
+            <div className="text-[17px] text-gray-500 flex items-center  gap-3 cursor-pointer mt-1">
+                <h2 className="border-l-gray-300 border-r-2 pr-[10px] hover:underline m-0">Kişilər</h2>
+                <h2 className="border-l-gray-300 border-r-2 pr-[10px] hover:underline m-0">Qadınlar</h2>
+                <h2 className="hover:underline m-0 ">Uşaqlar</h2>
             </div>
         </div>
         <div className="flex justify-between items-center gap-[35px] ">
