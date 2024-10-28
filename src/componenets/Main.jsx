@@ -20,7 +20,7 @@ export default function Main(){
         })
       }
     </Carousel>
-    <div className="w-[85%] m-auto">
+    <div className="w-[85%] m-auto font-montserrat">
        <div>
         <h1 className="text-[#131E38;] text-3xl font-bold my-10">HAZIRDA TREND</h1>
        </div>

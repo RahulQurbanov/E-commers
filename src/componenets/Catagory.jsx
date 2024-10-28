@@ -1,5 +1,5 @@
 export default function Catagory(){
-    return<div className="border-b-2 border-b-gray-200">
+    return<div className="border-b-2 border-b-gray-200 font-montserrat">
     <div className="w-[85%] m-auto">
         <ul className=" flex items-center gap-5 pt-5  text-slate-950 cursor-pointer font-bold">
             <li>Yeniliklər</li>
