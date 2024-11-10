@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router"
+
 export default function Header(){
+    const navigate = useNavigate()
+    function getLogin(){
+        navigate("/login");
+    }
     return <div> 
        <div className="bg-gray-100   py-2">
        <div className="w-[85%] m-auto flex items-center justify-between">
@@ -38,7 +44,7 @@ export default function Header(){
             </div>
             <div className="flex items-center gap-2 ">
             <i class="fa-regular fa-user cursor-pointer text-xl "></i>
-            <form>
+            <form onClick={getLogin}>
                 <select className="cursor-pointer text-sm">
                     <option>Sizin hesabınız</option>
                 </select>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const [day, setDay] = useState("");
@@ -39,6 +40,10 @@ export default function Login() {
   function getLogin(){
     setSignUp(false);
     setLogin(true);
+  }
+  const navigate = useNavigate(); 
+  function getMain(){
+    navigate("/");
   }
 
   return (
@@ -162,7 +167,7 @@ export default function Login() {
             <span className="text-[11px]">Hesab yaratmaqla bizim <span className="underline cursor-pointer">Şərt və Qaydalarımızı</span> & <span className="underline cursor-pointer">Məxfilik siyasətimiz</span>i qəbul edirsiniz.</span>
           </div>
           <div className="w-[100%] flex justify-center items-center mt-5">
-            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white">Qeydiyyatdan keçin</button>
+            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white" onClick={getMain}>Qeydiyyatdan keçin</button>
           </div>
         </div>
       </div>
@@ -183,7 +188,7 @@ export default function Login() {
             </div>
         </div>
         <div className="w-[77%] flex justify-center items-center mt-10 m-auto">
-              <button className="py-4 px-[152px] bg-[#212D4A] text-xl text-white">Daxil olun</button>
+              <button className="py-4 px-[152px] bg-[#212D4A] text-xl text-white" onClick={getMain}>Daxil olun</button>
         </div>
         <div className="flex justify-center items-center">
             <p className="font-bold text-sm mt-7 cursor-pointer">Şifrənizi unutmusunuz?</p>

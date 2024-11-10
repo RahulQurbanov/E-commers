@@ -1,21 +1,23 @@
-import Catagory from "./componenets/Catagory"
-import Footer from "./componenets/Footer"
-import Header from "./componenets/Header"
-import Login from "./componenets/Login"
-import Main from "./componenets/Main"
-import Product from "./componenets/Product"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainLayout from "./components/MainLayout"; // MainLayout bileşenini import et
+import Main from "./components/Main";
+import Login from "./components/Login";
+import Footer from "./components/Footer";
+import Product from "./components/Product";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />, // MainLayout her sayfada olacak
+      children: [
+        { path: "/", element: <Main /> }, // Ana sayfa
+        { path: "/login", element: <Login /> }, // Login sayfası
+      ],
+    },
+  ]);
 
-  return <div>
-    <Header></Header>
-    <Catagory></Catagory>
-    <Product></Product>
-    {/* <Main></Main> */}
-    {/* <Login></Login> */}
-    <Footer></Footer>
-  </div>
-   
+  return <RouterProvider router={router} />
 }
 
-export default App
+export default App;
