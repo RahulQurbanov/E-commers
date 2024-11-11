@@ -9,10 +9,11 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <MainLayout />, // MainLayout her sayfada olacak
+      element: <MainLayout />,
       children: [
-        { path: "/", element: <Main /> }, // Ana sayfa
-        { path: "/login", element: <Login /> }, // Login sayfası
+        { path: "/", element: <Main /> },
+        { path: "/login", element: <Login /> },
+        { path: "/product", element: <Product/> },
       ],
     },
   ]);

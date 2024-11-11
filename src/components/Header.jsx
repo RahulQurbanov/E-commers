@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router"
 
 export default function Header(){
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const navigateMain = useNavigate();
     function getLogin(){
         navigate("/login");
+    }
+    function getMain(){
+        navigate("/");
     }
     return <div> 
        <div className="bg-gray-100   py-2">
@@ -27,7 +31,7 @@ export default function Header(){
        <div className="border-b-2 border-b-gray-200">
         <div className="w-[85%] m-auto flex justify-between items-center">
         <div className="flex items-center gap-5">
-            <div className="mr-[35px]">
+            <div onClick={getMain} className="mr-[35px] cursor-pointer">
                 <img src="./src/image/MBlogo.webp" alt="" className="w-[200px]"/>
             </div>
             <div className="text-[17px] text-gray-500 flex items-center  gap-3 cursor-pointer mt-1">

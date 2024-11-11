@@ -8,9 +8,8 @@ export default function MainLayout() {
   return (
     <div>
       <Header />
-      {/* <Catagory /> */}
-      <Product/>
-      {/* <Outlet />  */}
+      <Catagory />
+      <Outlet /> 
       <Footer />
     </div>
   );
