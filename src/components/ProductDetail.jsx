@@ -72,7 +72,7 @@ export default function ProductDetail() {
       </div>
       </div>
       <div className="w-[100%] flex items-center gap-5 mt-20">
-      <div className="border-[1px] border-black w-[32%] px-12 py-5">
+      <div className="border-[1px] border-[#e0e0e0] w-[32%] px-12 py-5">
         <h1 className="text-[15px] font-bold mb-4">MƏHSUL HAQQINDA ƏSAS MƏLUMAT</h1>
         <p className="text-[13px] mb-5">Məhsulun kodu:K50K512116</p>
         <div className="text-[13px]">
@@ -83,10 +83,10 @@ export default function ProductDetail() {
             <p>- Calvin Klein</p>
         </div>
       </div>
-      <div className="border-[1px] border-black w-[32%] h-[250px] px-12 py-5">
+      <div className="border-[1px] border-[#e0e0e0] w-[32%] h-[250px] px-12 py-5">
         <h1 className="text-[15px] font-bold mb-5">MƏHSUL HAQQINDA ƏTRAFLI MƏLUMAT</h1>
       </div>
-      <div className="border-[1px] border-black w-[30%] px-12 py-5 h-[250px]">
+      <div className="border-[1px] border-[#e0e0e0] w-[30%] px-12 py-5 h-[250px]">
         <h1 className="text-[15px] font-bold mb-5">Seçilmiş parametrlər</h1>
         <div className="text-[14px]">
             <p>- Ölçü: no size</p>
