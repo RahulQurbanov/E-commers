@@ -1,15 +1,17 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header"; // Düzeltilmiş
-import Catagory from "./Catagory"; // Düzeltilmiş
-import Footer from "./Footer"; // Düzeltilmiş
-import Product from "./Product"; // Düzeltilmiş
+import Header from "./Header";
+import Catagory from "./Catagory";
+import Footer from "./Footer";
+import Product from "./Product"; 
+import ProductDetail from "./ProductDetail";
 
 export default function MainLayout() {
   return (
     <div>
       <Header />
       <Catagory />
-      <Outlet /> 
+      {/* <Outlet />  */}
+      <ProductDetail/>
       <Footer />
     </div>
   );

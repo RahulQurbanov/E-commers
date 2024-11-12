@@ -32,7 +32,7 @@ export default function Header(){
         <div className="w-[85%] m-auto flex justify-between items-center">
         <div className="flex items-center gap-5">
             <div onClick={getMain} className="mr-[35px] cursor-pointer">
-                <img src="./src/image/MBlogo.webp" alt="" className="w-[200px]"/>
+                <img onClick={getMain} src="./src/image/MBlogo.webp" alt="" className="w-[200px]"/>
             </div>
             <div className="text-[17px] text-gray-500 flex items-center  gap-3 cursor-pointer mt-1">
                 <h2 className="border-l-gray-300 border-r-2 pr-[10px] hover:underline m-0">Kişilər</h2>
