@@ -49,7 +49,7 @@ export default function Catagory() {
                     >
                         <li>Geyimler</li>
                         {hover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[1000px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {clothes.map((item, index) => (
                                     <p key={index}>{item.title_az}</p>
                                 ))}
@@ -62,7 +62,7 @@ export default function Catagory() {
                     >
                         <li>Ayaqqabılar</li>
                         {shoesHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[1000px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {shoes.map((item, index) => (
                                     <p key={index}>{item.title_az}</p>
                                 ))}
@@ -75,7 +75,7 @@ export default function Catagory() {
                     >
                         <li>Çanta və Aksesuarlar</li>
                         {bagHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[1000px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {bags.map((item, index) => (
                                     <p key={index}>{item.title_az}</p>
                                 ))}
@@ -88,7 +88,7 @@ export default function Catagory() {
                     >
                         <li>Gözəllik</li>
                         {beautyHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[1000px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {beauty.map((item, index) => (
                                     <p key={index}>{item.title_az}</p>
                                 ))}
@@ -101,7 +101,7 @@ export default function Catagory() {
                     >
                         <li>Ev</li>
                         {homeHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[1000px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {home.map((item, index) => (
                                     <p key={index}>{item.title_az}</p>
                                 ))}
