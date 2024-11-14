@@ -4,6 +4,7 @@ import Catagory from "./Catagory";
 import Footer from "./Footer";
 import Product from "./Product"; 
 import ProductDetail from "./ProductDetail";
+import AddToCard from "./AddToCard";
 
 export default function MainLayout() {
   return (
@@ -11,7 +12,8 @@ export default function MainLayout() {
       <Header />
       <Catagory />
       {/* <Outlet />  */}
-      <ProductDetail/>
+      <AddToCard/>
+      {/* <ProductDetail/> */}
       <Footer />
     </div>
   );

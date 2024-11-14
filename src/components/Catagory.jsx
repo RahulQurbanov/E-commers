@@ -36,6 +36,9 @@ export default function Catagory() {
         getClothes();
     }, []);
 
+
+    
+
     return (
         <div className="border-b-2 border-b-gray-200 font-montserrat">
             <div className="w-[85%] m-auto relative">
@@ -114,3 +117,5 @@ export default function Catagory() {
         </div>
     );
 }
+
+

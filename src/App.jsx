@@ -1,8 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainLayout from "./components/MainLayout"; // MainLayout bileşenini import et
+import MainLayout from "./components/MainLayout";
 import Main from "./components/Main";
-import Login from "./components/Login";
-import Footer from "./components/Footer";
 import Product from "./components/Product";
 
 function App() {
