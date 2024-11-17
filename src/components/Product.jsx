@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Product() {
   const [displayPrice, setDisplayPrice] = useState(true);
@@ -8,6 +8,7 @@ export default function Product() {
   const [displaySize, setDisplaySize] = useState(true);
   const [displayColor, setDisplayColor] = useState(true);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [productsLength, setProductLength] = useState(0);
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -43,10 +44,23 @@ export default function Product() {
     { size: 43 }, { size: 44 }, { size: 44.5 }, { size: 45 }, { size: 45.5 },
     { size: 46 }, { size: "S" }, { size: "M" }
   ];
-
+   
+  const [getProductData, setGetProductData] = useState([]);
+   async function getProduct() {
+    let data = await fetch('https://test.mybrands.az/api/v1/products/').then(res => res.json());
+    let products = data.results;
+    let productsLength = products.length
+    console.log(productsLength)
+    setGetProductData(products);
+    setProductLength(products.length)
+    console.log(products)
+  }
+  useEffect(() => {
+   getProduct()
+  },[])
   return (
-    <div className="w-[91%] m-auto flex justify-between py-10">
-      <div className="w-[45%] flex flex-col gap-[.5px]">
+    <div className="w-[91%] m-auto flex justify-between py-10 items-start">
+      <div className="w-[45%] flex flex-col gap-[.5px] mt-3">
         <div className="w-[80%] m-auto border-[1px] border-gray-200 px-5">
           <div
             className="flex items-center justify-between cursor-pointer text-center"
@@ -247,13 +261,13 @@ export default function Product() {
         </div>
       </div>
       <div className="w-[100%] text-[15px]">
-        <div className="flex  justify-between items-center">
+        <div className="flex  justify-between items-center mb-5">
             <div className="flex gap-3">
                 <input type="checkbox"/>
                 <label>Endirim</label>
             </div>
             <div className="mt-5">
-                <p className="text-gray-300">0 məhsul tapıldı</p>
+                <p className="text-gray-300 font-bold">{productsLength} məhsul tapıldı</p>
             </div>
             <div >
                 <select className="border-[1px] border-gray-200 py-2 px-3 ">
@@ -265,6 +279,20 @@ export default function Product() {
                     <option>Qiymətlər azdan-çoxa doğru</option>
                 </select>
             </div>
+        </div>
+        <div className="grid grid-cols-3 gap-5">
+          {getProductData &&
+           getProductData.map((item, index) =>{
+            return <div key={index}>
+               <div className="relative overflow-hidden group cursor-pointer">
+                <img src={item.image.items[0].file} className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110" />
+                <i class="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
+               </div>
+               <p className=" text-[15px] mt-5">{item.product.title_az}</p>
+               <p className="text-xl font-bold">${item.price}</p>
+            </div>
+           })
+          }
         </div>
       </div>
     </div>

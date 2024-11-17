@@ -11,8 +11,8 @@ export default function MainLayout() {
     <div>
       <Header />
       <Catagory />
-      {/* <Outlet />  */}
-      <AddToCard/>
+      {/* <AddToCard/> */}
+      <Outlet /> 
       {/* <ProductDetail/> */}
       <Footer />
     </div>

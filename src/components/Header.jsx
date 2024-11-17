@@ -3,11 +3,15 @@ import { useNavigate } from "react-router"
 export default function Header(){
     const navigate = useNavigate();
     const navigateMain = useNavigate();
+    const navigateWishList = useNavigate();
     function getLogin(){
         navigate("/login");
     }
     function getMain(){
-        navigate("/");
+        navigateMain("/");
+    }
+    function getWishList(){
+        navigateWishList("/wishlist");
     }
     return <div> 
        <div className="bg-gray-100   py-2">
@@ -43,7 +47,7 @@ export default function Header(){
         <div className="flex justify-between items-center gap-[35px] ">
             <div className="flex items-center gap-7 text-xl border-r-gray-200 border-r-2 pr-[35px]">
             <i class="fa-solid fa-magnifying-glass cursor-pointer"></i>
-            <i class="fa-regular fa-heart cursor-pointer"></i>
+            <i class="fa-regular fa-heart cursor-pointer" onClick={navigateWishList}></i>
             <i class="fa-solid fa-bag-shopping cursor-pointer"></i>
             </div>
             <div className="flex items-center gap-2 ">
