@@ -59,7 +59,7 @@ export default function Product() {
    getProduct()
   },[])
   return (
-    <div className="w-[91%] m-auto flex justify-between py-10 items-start">
+    <div className="w-[91%] m-auto flex justify-between  items-start">
       <div className="w-[45%] flex flex-col gap-[.5px] mt-3">
         <div className="w-[80%] m-auto border-[1px] border-gray-200 px-5">
           <div
