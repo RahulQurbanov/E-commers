@@ -194,9 +194,9 @@ export default function Login() {
             <p className="font-bold text-sm mt-7 cursor-pointer">Şifrənizi unutmusunuz?</p>
         </div>
         <div className="flex items-center justify-center">
-            <p className="text-gray-500">___________________________</p>
-            <p className="pt-[10px] px-4">VƏ YA</p>
-            <p className="text-gray-500">___________________________</p>
+            <p className="text-gray-500">_________________________</p>
+            <p className="pt-[10px] px-4 text-[15px]">VƏ YA</p>
+            <p className="text-gray-500">_________________________</p>
         </div>
         <div className="flex justify-center items-center text-3xl font-bold mt-5 mb-4">
             <p>Daxil olun</p>
