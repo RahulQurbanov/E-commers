@@ -1,17 +1,51 @@
 import { useEffect, useState } from "react"
 import 'antd/dist/reset.css';
 import { Carousel } from "antd";
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick-theme.css';
 
 
 export default function Main(){
     const [campaigns,setCampaings] = useState([]);
+    const [trend, setTrend] = useState([]);
+    async function getTrendProduct(){
+      let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
+      let trendProduct = data.trend_products;
+      console.log(trendProduct);
+      setTrend(trendProduct);
+    }
     async function getCampaings(){
         let data = await fetch('https://test.mybrands.az/api/v1/campaigns').then(res=>res.json());
         setCampaings(data)
     }
     useEffect(()=>{
-        getCampaings()
-    },[])
+        getCampaings();
+        getTrendProduct();
+    },[]);
+
+    const sliderSettings = {
+      infinite: true,
+      speed: 500,
+      slidesToShow: 6,
+      slidesToScroll:5,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          },
+        },
+      ],
+    };
     return<>
     <Carousel arrows dots autoplay autoplaySpeed={2000} className="w-[85%] m-auto">
       {campaigns && 
@@ -21,52 +55,30 @@ export default function Main(){
       }
     </Carousel>
     <div className="w-[85%] m-auto font-montserrat">
-       <div>
-        <h1 className="text-[#131E38;] text-3xl font-bold my-10">HAZIRDA TREND</h1>
-       </div>
-       <div  className="flex items-center gap-5">
-       <div>
-      <div className="relative">
-      <img src="./src/image/cins2.jpeg" alt="" className="w-[100%] " />
-      <i class="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
+        <div>
+          <h1 className="text-[#131E38] text-3xl font-bold my-10">HAZIRDA TREND</h1>
+        </div>
+        <div className="relative">
+          <Slider {...sliderSettings}>
+            {trend &&
+              trend.map((item, index) => (
+                <div key={index} className="p-4">
+                  <div className="relative">
+                    <img
+                      src={`https://test.mybrands.az${item.image.items[0].file}`}
+                      className="w-[1050px] h-[300px]"
+                      alt="Trend Ürün"
+                    />
+                    <i className="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
+                  </div>
+                  <p className="text-[15px] text-gray-500 mt-4 mb-6">{item.product.title_az}</p>
+                  <p className="text-lg font-bold">${item.price}</p>
+                </div>
+              ))}
+          </Slider>
+        </div>
       </div>
-       <p className="text-[15px] text-gray-500 mt-4 mb-6">Calvin Kleins, Cins</p>
-       <p className="text-lg font-bold">$200.00</p>
-       </div>
-       <div>
-      <div className="relative">
-      <img src="./src/image/sviter.jpeg" alt="" className="w-[97%]" />
-      <i class="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-      </div>
-       <p className="text-[15px] text-gray-500 mt-4 mb-6">Calvin Kleins, Sviter</p>
-       <p className="text-lg font-bold">$199.99</p>
-       </div>
-       <div>
-      <div className="relative">
-      <img src="./src/image/qisaqol.jpeg" alt="" className="w-[97%]" />
-      <i class="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-      </div>
-       <p className="text-[15px] text-gray-500 mt-4 mb-6">Calvin Kleins, Polo</p>
-       <p className="text-lg font-bold">$109.99</p>
-       </div>
-       <div>
-      <div className="relative">
-      <img src="./src/image/bag.jpeg" alt="" className="w-[100%]" />
-      <i class="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-      </div>
-       <p className="text-[15px] text-gray-500 mt-4 mb-6">Calvin Kleins, Çanta</p>
-       <p className="text-lg font-bold">$299.99</p>
-       </div>
-       <div>
-      <div className="relative">
-      <img src="./src/image/cins.jpeg" alt="" className="w-[100%]" />
-      <i class="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-      </div>
-       <p className="text-[15px] text-gray-500 mt-4 mb-6">Calvin Kleins, Cins</p>
-       <p className="text-lg font-bold">$200.00</p>
-       </div>
-       </div>
-    </div>
+
     <div className="w-[85%] m-auto grid grid-cols-2 mt-28 gap-5">
       <div>
         <div className="bg-[url('./src/image/sweatshirt.png')] bg-cover h-[620px] w-[100%] relative">

@@ -12,11 +12,11 @@ export default function Footer(){
                     <p className="pb-3">__</p>
                     </div>
                     <div className="flex items-center gap-7 pb-[15px]">
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/mybrands.az/"><i class="fa-brands fa-facebook-f hover:scale-125"></i></a>
+                    <a href="https://www.instagram.com/mybrands.az/"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/novco-group-of-companies?originalSubdomain=ru"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.youtube.com/user/MYBRANDS1TV"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@mybrands.az"><i class="fa-brands fa-tiktok"></i></a>
                     </div>
                 </div>
             </div>
