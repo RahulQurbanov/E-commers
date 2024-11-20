@@ -12,7 +12,7 @@ function App() {
       path: "/",
       element: <MainLayout />,
       children: [
-        { path: "/", element: <Main /> },
+        { path: "/", element: <Main/> },
         { path: "/login", element: <Login /> },
         { path: "/product", element: <Product /> },
         { path: "/wishlist", element: <WishList /> },
