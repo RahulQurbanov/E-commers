@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 export default function Login() {
@@ -46,6 +47,38 @@ export default function Login() {
     navigate("/");
   }
 
+  const isLogged = useSelector(state => state.auth.isLogged);
+  const [authEmail,setAuthEmail] = useState();
+  const [authPassword,setAuthPassword] = useState();
+  const authData = {
+    "email":authEmail,
+    "password":authPassword
+  };
+console.log(JSON.stringify(authData))
+  
+
+  const Login = async() =>{
+    const response =await fetch("https://test.mybrands.az/api/v1/auth/login",{
+      method:"POST",
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body:JSON.stringify(authData)
+    }).then(res => res.json())
+    
+    console.log(response)
+  }
+  const Logout =() =>{
+
+  }
+  
+  function handleChangeEmail(event){
+    setAuthEmail(event.target.value);
+  }
+  function handleChangePassword(event){
+    setAuthPassword(event.target.value);
+  }
+
   return (
     <div className="bg-gray-100 flex items-center justify-center font-montserrat">
       <div className="w-[40%] m-auto bg-white px-10 py-5 my-10 ">
@@ -65,7 +98,7 @@ export default function Login() {
         <div className="w-[77%] flex flex-col m-auto gap-5 text-black mt-5">
           {email && (
             <>
-              <input type="text" placeholder="Email address" className="p-3 w-[100%] border-2 border-slate-200" />
+              <input type="text" placeholder="Email address" className="p-3 w-[100%] border-2 border-slate-200 bg-red-200" value={authEmail} onChange={handleChangeEmail} />
               <input
                 type="text"
                 value={"+994" + phoneNumber}
@@ -76,7 +109,7 @@ export default function Login() {
                 <input type="text" placeholder="Ad" className="p-3 w-[100%] border-2 border-slate-200" />
                 <input type="text" placeholder="Soyad" className="p-3 w-[100%] border-2 border-slate-200" />
               </div>
-              <input type="password" placeholder="Şifrə" className="p-3 w-[100%] border-2 border-slate-200" />
+              <input type="password" placeholder="Şifrə" className="p-3 w-[100%] border-2 border-slate-200 bg-red-200" value={authPassword} onChange={handleChangePassword} />
               <input type="password" placeholder="Şifrəni təsdiq edin" className="p-3 w-[100%] border-2 border-slate-200" />
               <div className="flex flex-col gap-1">
                 <p>Doğum tarixi</p>
@@ -167,7 +200,7 @@ export default function Login() {
             <span className="text-[11px]">Hesab yaratmaqla bizim <span className="underline cursor-pointer">Şərt və Qaydalarımızı</span> & <span className="underline cursor-pointer">Məxfilik siyasətimiz</span>i qəbul edirsiniz.</span>
           </div>
           <div className="w-[100%] flex justify-center items-center mt-5">
-            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white" onClick={getMain}>Qeydiyyatdan keçin</button>
+            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white" onClick={isLogged?Logout:Login}>Qeydiyyatdan keçin</button>
           </div>
         </div>
       </div>
@@ -188,7 +221,7 @@ export default function Login() {
             </div>
         </div>
         <div className="w-[77%] flex justify-center items-center mt-10 m-auto">
-              <button className="py-4 px-[152px] bg-[#212D4A] text-xl text-white" onClick={getMain}>Daxil olun</button>
+              <button className="py-4 px-[152px] bg-[#212D4A] text-xl text-white" onClick={getMain}>{isLogged?"Logout":"Login"}</button>
         </div>
         <div className="flex justify-center items-center">
             <p className="font-bold text-sm mt-7 cursor-pointer">Şifrənizi unutmusunuz?</p>
