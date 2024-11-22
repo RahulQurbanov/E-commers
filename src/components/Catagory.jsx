@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { setCategoryId } from "./store/categoryProduct";
 
 export default function Catagory() {
     const [hover, setHover] = useState(false);
@@ -13,10 +15,11 @@ export default function Catagory() {
     const [beauty, setBeauty] = useState([]);
     const [home, setHome] = useState([]);
 
+    const dispatch = useDispatch();
     let navigate = useNavigate();
 
     function getProduct(){
-        navigate("/product")
+        navigate("/product");
     }
 
     async function getClothes() {
@@ -36,8 +39,10 @@ export default function Catagory() {
         getClothes();
     }, []);
 
-
-    
+    function handleCategoryClick(id) {
+        dispatch(setCategoryId(id)); // Redux action göndərilir
+        navigate("/category-product");
+    }
 
     return (
         <div className="border-b-2 border-b-gray-200 font-montserrat">
@@ -54,7 +59,7 @@ export default function Catagory() {
                         {hover && (
                             <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {clothes.map((item, index) => (
-                                    <p key={index}>{item.title_az}</p>
+                                    <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
@@ -67,7 +72,7 @@ export default function Catagory() {
                         {shoesHover && (
                             <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {shoes.map((item, index) => (
-                                    <p key={index}>{item.title_az}</p>
+                                    <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
@@ -80,7 +85,7 @@ export default function Catagory() {
                         {bagHover && (
                             <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {bags.map((item, index) => (
-                                    <p key={index}>{item.title_az}</p>
+                                    <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
@@ -93,7 +98,7 @@ export default function Catagory() {
                         {beautyHover && (
                             <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {beauty.map((item, index) => (
-                                    <p key={index}>{item.title_az}</p>
+                                    <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
@@ -106,7 +111,7 @@ export default function Catagory() {
                         {homeHover && (
                             <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
                                 {home.map((item, index) => (
-                                    <p key={index}>{item.title_az}</p>
+                                    <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
@@ -117,5 +122,3 @@ export default function Catagory() {
         </div>
     );
 }
-
-

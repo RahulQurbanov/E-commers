@@ -5,6 +5,7 @@ import Product from "./components/Product";
 import Login from "./components/Login";
 import WishList from "./components/WishList";
 import ProductDetail from "./components/ProductDetail";
+import CategoryProduct from "./components/CategoryProduct";
 
 function App() {
   const router = createBrowserRouter([
@@ -15,8 +16,9 @@ function App() {
         { path: "/", element: <Main/> },
         { path: "/login", element: <Login /> },
         { path: "/product", element: <Product /> },
+        { path: "/category-product", element: <CategoryProduct /> },
         { path: "/wishlist", element: <WishList /> },
-        { path: "/product/:id", element: <ProductDetail /> },
+        { path: "/product-detail", element: <ProductDetail /> },
       ],
     },
   ]);

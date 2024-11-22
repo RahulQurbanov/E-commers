@@ -1,7 +1,10 @@
+import Item from "antd/es/list/Item";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { setProductId } from "./store/categoryProduct";
 
-export default function Product() {
+export default function CategoryProduct() {
   const [displayPrice, setDisplayPrice] = useState(true);
   const [displayCollection, setDisplayCollection] = useState(true);
   const [displayCategory, setDisplayCategory] = useState(true);
@@ -9,7 +12,19 @@ export default function Product() {
   const [displaySize, setDisplaySize] = useState(true);
   const [displayColor, setDisplayColor] = useState(true);
   const [selectedColor, setSelectedColor] = useState(null);
-  const [productsLength, setProductLength] = useState(0);
+  const [categoryClick, setCategoryClick] = useState([]);
+  const [categoryLength, setCategoryLength] = useState(0);
+  const selectedCategoryId = useSelector((state) => state.category.selectedCategoryId);
+
+  async function getcategoryClick() {
+    let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}`).then(res => res.json());
+    setCategoryLength(data.results.length);
+    setCategoryClick(data.results || []);
+  }
+
+  useEffect(() => {
+    getcategoryClick();
+  }, [selectedCategoryId]);
 
   const handleColorChange = (color) => {
     setSelectedColor(color);
@@ -45,20 +60,17 @@ export default function Product() {
     { size: 43 }, { size: 44 }, { size: 44.5 }, { size: 45 }, { size: 45.5 },
     { size: 46 }, { size: "S" }, { size: "M" }
   ];
-   
-  const [getProductData, setGetProductData] = useState([]);
-   async function getProduct() {
-    let data = await fetch('https://test.mybrands.az/api/v1/products/').then(res => res.json());
-    let products = data.results;
-    let productsLength = products.length
-    console.log(productsLength)
-    setGetProductData(products);
-    setProductLength(products.length)
-    console.log(products)
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+  
+
+  function getProductDetailId(){
+    dispatch(setProductId(id));
+    navigate("/product-detail");
   }
-  useEffect(() => {
-   getProduct();
-  },[])
+  
+  function categoryClickId(id) {
+  }
   return (
     <div className="w-[91%] m-auto flex justify-between  items-start">
       <div className="w-[45%] flex flex-col gap-[.5px] mt-3">
@@ -268,7 +280,7 @@ export default function Product() {
                 <label>Endirim</label>
             </div>
             <div className="mt-5">
-                <p className="text-gray-300 font-bold">{productsLength} məhsul tapıldı</p>
+                <p className="text-gray-300 font-bold">{categoryLength} məhsul tapıldı</p>
             </div>
             <div >
                 <select className="border-[1px] border-gray-200 py-2 px-3 ">
@@ -282,15 +294,15 @@ export default function Product() {
             </div>
         </div>
         <div className="grid grid-cols-3 gap-5">
-          {getProductData &&
-           getProductData.map((item, index) =>{
-            return <div key={index}>
+          {categoryClick &&
+           categoryClick.map((item, index) =>{
+            return <div key={index} onClick={() => categoryClickId(item.id)}>
                <div className="relative overflow-hidden group cursor-pointer">
                 <img src={item.image.items[0].file} className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110" />
                 <i class="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
                </div>
                <p className=" text-[15px] mt-5">{item.product.title_az}</p>
-               <p className="text-xl font-bold">${item.price}</p>
+               <p className="text-xl font-bold">{item.price}AZN</p>
             </div>
            })
           }
@@ -299,3 +311,4 @@ export default function Product() {
     </div>
   );
 }
+

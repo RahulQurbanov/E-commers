@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactImageMagnify from "react-image-magnify";
+import { useSelector } from "react-redux";
 
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState(null);
+  const selectedProductId = useSelector((state) => state.category.selectedProductId);
 
-  const defaultImage = "https://via.placeholder.com/500"; // Fallback image URL
+  const defaultImage = "https://via.placeholder.com/500";
 
-  // Fetch product details from the API
   async function fetchProductDetail() {
     try {
-      const response = await fetch(`https://test.mybrands.az/api/v1/products/${id}`);
+      const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
       if (!response.ok) {
         throw new Error("Ürün bilgisi alınamadı.");
       }
       const data = await response.json();
       setProduct(data);
-      // Use the first image from variations or fallback
+      console.log(data)
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -31,7 +32,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     fetchProductDetail();
-  }, [id]);
+  }, [selectedProductId]);
 
   if (loading) {
     return <p>Yükleniyor...</p>;
@@ -41,7 +42,6 @@ export default function ProductDetail() {
     return <p>Ürün bilgisi bulunamadı.</p>;
   }
 
-  // Handle image thumbnail click to change main image
   const handleThumbnailClick = (imageFile) => {
     setMainImage(imageFile || defaultImage);
   };
@@ -75,7 +75,7 @@ export default function ProductDetail() {
                 smallImage: {
                   alt: "Main Product",
                   isFluidWidth: true,
-                  src: mainImage, // Use the dynamic main image
+                  src: mainImage,
                 },
                 largeImage: {
                   src: mainImage,
@@ -87,7 +87,7 @@ export default function ProductDetail() {
                   width: "150%",
                   height: "95%",
                 },
-                enlargedImagePosition: "beside", // Zoom effect to the right
+                enlargedImagePosition: "beside",
               }}
             />
           </div>
