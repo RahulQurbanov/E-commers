@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactImageMagnify from "react-image-magnify";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import setSelectedProductId from "./store/categoryProduct";
 
 export default function ProductDetail() {
-  const { id } = useParams();
+  const { id } = useParams(); // URL parametresinden 'id' alınır
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState(null);
   const selectedProductId = useSelector((state) => state.category.selectedProductId);
-
+  const dispatch = useDispatch();
   const defaultImage = "https://via.placeholder.com/500";
 
+  // API'den ürün detaylarını alır
   async function fetchProductDetail() {
     try {
       const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
@@ -20,7 +22,7 @@ export default function ProductDetail() {
       }
       const data = await response.json();
       setProduct(data);
-      console.log(data)
+      console.log(data);
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -30,9 +32,19 @@ export default function ProductDetail() {
     }
   }
 
+  // selectedProductId değiştiğinde ürün bilgilerini getir
   useEffect(() => {
-    fetchProductDetail();
+    if (selectedProductId) {
+      fetchProductDetail();
+    }
   }, [selectedProductId]);
+
+  // 'id' parametresi değiştiğinde selectedProductId'yi güncelle
+  useEffect(() => {
+    if (id && id !== selectedProductId) {
+      dispatch(setSelectedProductId(id)); // selectedProductId Redux'a set edilir
+    }
+  }, [id, selectedProductId, dispatch]);
 
   if (loading) {
     return <p>Yükleniyor...</p>;
@@ -92,7 +104,6 @@ export default function ProductDetail() {
             />
           </div>
         </div>
-
         {/* Product Details */}
         <div className="mt-6 flex flex-col items-center gap-6 w-[58%] font-circe">
           <div className="flex flex-col gap-[1px]">

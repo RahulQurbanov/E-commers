@@ -26,18 +26,21 @@ export default function CategoryProduct() {
 
   const [price, setPrice] = useState([]);
 
+  
   async function getPrice(minPrice = 0, maxPrice = 100) {
     try {
-      let data = await fetch(
+      const response = await fetch(
         `https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}&max_price=${maxPrice}&min_price=${minPrice}`
-      ).then((res) => res.json());
+      );
+      const data = await response.json();
       setPrice(data.results || []);
-      console.log("Price data:", data);
+      console.log("Fiyat verileri:", data);
     } catch (error) {
-      console.error("Error fetching price data:", error);
+      console.error("Fiyat verileri alınırken hata oluştu:", error);
     }
   }
-    const handlePriceChange = (min, max) => {
+  const handlePriceChange = (min, max) => {
+    console.log(`Price range selected: ${min} - ${max}`);
     getPrice(min, max);
   };
 
@@ -329,7 +332,7 @@ const handleCustomPriceChange = () => {
         <div className="grid grid-cols-3 gap-5">
           {categoryClick &&
            categoryClick.map((item, index) =>{
-            return <div key={index} onClick={() => categoryClickId(item.id)}>
+            return <div key={index}>
                <div className="relative overflow-hidden group cursor-pointer">
                 <img src={item.image.items[0].file} className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110" />
                 <i class="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
