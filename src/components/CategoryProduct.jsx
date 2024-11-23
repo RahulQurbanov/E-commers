@@ -22,6 +22,37 @@ export default function CategoryProduct() {
     setCategoryClick(data.results || []);
   }
 
+  //! Filter
+
+  const [price, setPrice] = useState([]);
+
+  async function getPrice(minPrice = 0, maxPrice = 100) {
+    try {
+      let data = await fetch(
+        `https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}&max_price=${maxPrice}&min_price=${minPrice}`
+      ).then((res) => res.json());
+      setPrice(data.results || []);
+      console.log("Price data:", data);
+    } catch (error) {
+      console.error("Error fetching price data:", error);
+    }
+  }
+    const handlePriceChange = (min, max) => {
+    getPrice(min, max);
+  };
+
+  const [minPrice, setMinPrice] = useState("");
+const [maxPrice, setMaxPrice] = useState("");
+
+const handleCustomPriceChange = () => {
+  const min = minPrice ? parseInt(minPrice) : 0;
+  const max = maxPrice ? parseInt(maxPrice) : 1000;
+
+  getPrice(min, max);
+};
+
+  
+
   useEffect(() => {
     getcategoryClick();
   }, [selectedCategoryId]);
@@ -68,9 +99,11 @@ export default function CategoryProduct() {
     dispatch(setProductId(id));
     navigate("/product-detail");
   }
+
   
-  function categoryClickId(id) {
-  }
+  // function categoryClickId(id) {
+  // }
+
   return (
     <div className="w-[91%] m-auto flex justify-between  items-start">
       <div className="w-[45%] flex flex-col gap-[.5px] mt-3">
@@ -89,24 +122,24 @@ export default function CategoryProduct() {
           <div className={`${displayPrice ? "hidden" : ""}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-5">
-                <input type="text" placeholder="Min" className="w-full p-4 bg-gray-100" />
-                <input type="text" placeholder="Max" className="w-full p-4 bg-gray-100" />
+                <input type="text" placeholder="Min" className="w-full p-4 bg-gray-100" onChange={(e) => setMinPrice(e.target.value)} />
+                <input type="text" placeholder="Max" className="w-full p-4 bg-gray-100" onChange={(e) => setMaxPrice(e.target.value)} />
             </div>
                <div className="flex flex-col gap-4 mt-2 pb-5">
                <div className="flex gap-2">
-                    <input type="radio" name="1" />
+                    <input type="radio" name="1" onChange={() => handlePriceChange(0, 100)} />
                     <label> 0 - 100 AZN</label>
                 </div>
                 <div className="flex gap-2">
-                    <input type="radio" name="1" />
+                    <input type="radio" name="1" onChange={() => handlePriceChange(100, 200)} />
                     <label> 100 - 200 AZN</label>
                 </div>
                 <div className="flex gap-2">
-                    <input type="radio" name="1" />
+                    <input type="radio" name="1" onChange={() => handlePriceChange(200, 300)} />
                     <label> 200 - 300 AZN</label>
                 </div>
                 <div className="flex gap-2">
-                    <input type="radio" name="1" />
+                    <input type="radio" name="1" onChange={() => handlePriceChange(300, Infinity)} />
                     <label> <i className="fa-solid fa-angle-right"></i>300 AZN</label>
                 </div>
                </div>
