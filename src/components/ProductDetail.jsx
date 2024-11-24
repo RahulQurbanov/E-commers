@@ -2,27 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ReactImageMagnify from "react-image-magnify";
 import { useSelector, useDispatch } from "react-redux";
-import setSelectedProductId from "./store/categoryProduct";
+import { setProductId as setSelectedProductId } from "./store/categoryProduct";
+import { setProductImage as selectedProductImage } from "./store/categoryProduct";
 
 export default function ProductDetail() {
-  const { id } = useParams(); // URL parametresinden 'id' alınır
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState(null);
   const selectedProductId = useSelector((state) => state.category.selectedProductId);
+  const selectedProductImage = useSelector((state) => state.category.selectedProductImage);
   const dispatch = useDispatch();
-  const defaultImage = "https://via.placeholder.com/500";
+  const defaultImage = selectedProductImage;
 
+
+  
+  const [selectedSize, setSelectedSize] = useState(product.variations[0]?.size?.title_az || "");
+
+const handleSizeClick = (size) => {
+  setSelectedSize(size);
+};
+
+  
   // API'den ürün detaylarını alır
   async function fetchProductDetail() {
     try {
       const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
+      console.log(selectedProductId);
       if (!response.ok) {
         throw new Error("Ürün bilgisi alınamadı.");
       }
       const data = await response.json();
       setProduct(data);
-      console.log(data);
+      console.log("ProductDetail:",data)
+
+      // İlk küçük resmi mainImage olarak ayarla
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -34,6 +48,9 @@ export default function ProductDetail() {
 
   // selectedProductId değiştiğinde ürün bilgilerini getir
   useEffect(() => {
+    setSelectedSize(product.variations[0]?.size?.title_az || "");
+  }, [product]);
+  useEffect(() => {
     if (selectedProductId) {
       fetchProductDetail();
     }
@@ -42,7 +59,7 @@ export default function ProductDetail() {
   // 'id' parametresi değiştiğinde selectedProductId'yi güncelle
   useEffect(() => {
     if (id && id !== selectedProductId) {
-      dispatch(setSelectedProductId(id)); // selectedProductId Redux'a set edilir
+      dispatch(setSelectedProductId(id));
     }
   }, [id, selectedProductId, dispatch]);
 
@@ -105,18 +122,33 @@ export default function ProductDetail() {
           </div>
         </div>
         {/* Product Details */}
-        <div className="mt-6 flex flex-col items-center gap-6 w-[58%] font-circe">
+        <div className="mt-6 flex flex-col items-center gap-10 w-[58%] font-circe">
           <div className="flex flex-col gap-[1px]">
-            <span className="text-2xl font-bold">{product.title_az}</span>
-            <span className="text-[13px] text-gray-400 text-center font-light">
-              {product.category ? product.category.title_az : "Kategori yok"}
+            <span className="text-3xl font-bold">{product.manufacturer.title}</span>
+            <span className="text-[13px] text-gray-400 text-center font-light mt-1">
+              {product.categories[0].title_az}
             </span>
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-center text-xl font-bold">{product.variations[0].price} AZN</span>
+            <span className="text-center text-[22px] font-bold">{product.variations[0].price} AZN</span>
             <a href="#" className="underline text-[12px]">
               Çatdırılma və geri qaytarılma haqqında məlumat
             </a>
+          </div>
+          <div className="flex items-center gap-5 cursor-pointer" onClick={(item)=>{item.style.deceration = "underline"}}>
+          {product.variations.map((variation, index) => (
+          <div key={index} onClick={() => handleSizeClick(variation.size.title_az)}
+            className={`text-center ${selectedSize === variation.size.title_az ? 'border-b-2 border-black' : ''}`} >
+           <p>{variation.size.title_az}</p>
+            </div>
+          ))}
+          </div>
+          <div>
+            <p className="w-10 h-10 rounded-full" style={{ backgroundColor: product.variations[0].color.title_az }}>.</p>
+          </div>
+          <div className="flex items-center gap-5 text-red-500 text-lg">
+            <p><i class="fa-solid fa-clock-rotate-left"></i></p>
+            <p>MƏHDUD SAYDA</p>
           </div>
           <div className="flex flex-col w-[90%] gap-[20px]">
             <button className="bg-[#212D4A] text-white py-3 px-7 text-xl">
@@ -131,8 +163,8 @@ export default function ProductDetail() {
 
       {/* Product Information */}
       <div className="w-[100%] flex items-center gap-5 mt-20">
-        <div className="border-[1px] border-[#e0e0e0] w-[32%] px-12 py-5">
-          <h1 className="text-[15px] font-bold mb-4">MƏHSUL HAQQINDA ƏSAS MƏLUMAT</h1>
+        <div className="border-[1px] border-[#e0e0e0] w-[36%] h-[250px] px-12 py-5">
+          <h1 className="text-[15px] font-bold  mb-4">MƏHSUL HAQQINDA ƏSAS MƏLUMAT</h1>
           <p className="text-[13px] mb-5">Məhsulun kodu: {product.sku}</p>
           <div className="text-[13px]">
             <p>- {product.category ? product.category.title_az : "Kategori bilgisi yok"}</p>
@@ -142,7 +174,6 @@ export default function ProductDetail() {
         </div>
         <div className="border-[1px] border-[#e0e0e0] w-[32%] h-[250px] px-12 py-5">
           <h1 className="text-[15px] font-bold mb-5">MƏHSUL HAQQINDA ƏTRAFLI MƏLUMAT</h1>
-          <p className="text-[13px]">{product.description_az}</p>
         </div>
         <div className="border-[1px] border-[#e0e0e0] w-[30%] px-12 py-5 h-[250px]">
           <h1 className="text-[15px] font-bold mb-5">Seçilmiş parametrlər</h1>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { setProductId } from "./store/categoryProduct";
+import { setProductImage } from "./store/categoryProduct";
 
 export default function CategoryProduct() {
   const [displayPrice, setDisplayPrice] = useState(true);
@@ -20,6 +21,7 @@ export default function CategoryProduct() {
     let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}`).then(res => res.json());
     setCategoryLength(data.results.length);
     setCategoryClick(data.results || []);
+    console.log("product",data)
   }
 
   //! Filter
@@ -98,16 +100,12 @@ const handleCustomPriceChange = () => {
   let navigate = useNavigate();
   
 
-  function getProductDetailId(){
-    dispatch(setProductId(id));
+  function getProductDetailId(productId,productImage) {
+    dispatch(setProductId(productId));
+    dispatch(setProductImage(productImage))
     navigate("/product-detail");
-  }
-
-  
-  // function categoryClickId(id) {
-  // }
-
-  return (
+  }  
+   return (
     <div className="w-[91%] m-auto flex justify-between  items-start">
       <div className="w-[45%] flex flex-col gap-[.5px] mt-3">
         <div className="w-[80%] m-auto border-[1px] border-gray-200 px-5">
@@ -332,7 +330,7 @@ const handleCustomPriceChange = () => {
         <div className="grid grid-cols-3 gap-5">
           {categoryClick &&
            categoryClick.map((item, index) =>{
-            return <div key={index}>
+            return <div key={index}   onClick={() => getProductDetailId(item.product.id, item.image.items[0].file)}>
                <div className="relative overflow-hidden group cursor-pointer">
                 <img src={item.image.items[0].file} className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110" />
                 <i class="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
