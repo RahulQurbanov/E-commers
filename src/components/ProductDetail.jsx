@@ -15,15 +15,6 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const defaultImage = selectedProductImage;
 
-
-  
-  const [selectedSize, setSelectedSize] = useState(product.variations[0]?.size?.title_az || "");
-
-const handleSizeClick = (size) => {
-  setSelectedSize(size);
-};
-
-  
   // API'den ürün detaylarını alır
   async function fetchProductDetail() {
     try {
@@ -47,9 +38,6 @@ const handleSizeClick = (size) => {
   }
 
   // selectedProductId değiştiğinde ürün bilgilerini getir
-  useEffect(() => {
-    setSelectedSize(product.variations[0]?.size?.title_az || "");
-  }, [product]);
   useEffect(() => {
     if (selectedProductId) {
       fetchProductDetail();
@@ -122,29 +110,25 @@ const handleSizeClick = (size) => {
           </div>
         </div>
         {/* Product Details */}
-        <div className="mt-6 flex flex-col items-center gap-10 w-[58%] font-circe">
+        <div className="mt-6 flex flex-col items-center gap-6 w-[58%] font-circe">
           <div className="flex flex-col gap-[1px]">
-            <span className="text-3xl font-bold">{product.manufacturer.title}</span>
-            <span className="text-[13px] text-gray-400 text-center font-light mt-1">
+            <span className="text-2xl font-bold">{product.manufacturer.title}</span>
+            <span className="text-[13px] text-gray-400 text-center font-light">
               {product.categories[0].title_az}
             </span>
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-center text-[22px] font-bold">{product.variations[0].price} AZN</span>
+            <span className="text-center text-xl font-bold">{product.variations[0].price} AZN</span>
             <a href="#" className="underline text-[12px]">
               Çatdırılma və geri qaytarılma haqqında məlumat
             </a>
           </div>
           <div className="flex items-center gap-5 cursor-pointer" onClick={(item)=>{item.style.deceration = "underline"}}>
-          {product.variations.map((variation, index) => (
-          <div key={index} onClick={() => handleSizeClick(variation.size.title_az)}
-            className={`text-center ${selectedSize === variation.size.title_az ? 'border-b-2 border-black' : ''}`} >
-           <p>{variation.size.title_az}</p>
-            </div>
-          ))}
-          </div>
-          <div>
-            <p className="w-10 h-10 rounded-full" style={{ backgroundColor: product.variations[0].color.title_az }}>.</p>
+            {product.variations.map((size,index) =>{
+              return <div key={index}>
+                <p>{size.size.title_az}</p>
+              </div>
+            })}
           </div>
           <div className="flex items-center gap-5 text-red-500 text-lg">
             <p><i class="fa-solid fa-clock-rotate-left"></i></p>
