@@ -24,7 +24,19 @@ export default function CategoryProduct() {
     console.log("product",data)
   }
 
+
   //! Filter
+  
+  const [filterCategory, setFilterCategory] = useState([]);
+
+  async function getFilterCategory(){
+    let data = await fetch('https://test.mybrands.az/api/v1/products/filter-items').then(res => res.json());
+    setFilterCategory(data)
+    console.log("FilterCategory",data);
+  }
+
+
+  //! Filter Price
 
   const [price, setPrice] = useState([]);
 
@@ -74,11 +86,9 @@ export default function CategoryProduct() {
   };
   
 
-
-  
-
   useEffect(() => {
     getcategoryClick();
+    getFilterCategory()
   }, [selectedCategoryId]);
 
   const handleColorChange = (color) => {
@@ -107,14 +117,6 @@ export default function CategoryProduct() {
     { name: "Tünd boz", hex: "#A9A9A9" },
     { name: "Firurəyi", hex: "#8A2BE2" },
   ];
-
-  const sizes = [
-    { size: 29 }, { size: 30 }, { size: 36 }, { size: 36.5 }, { size: 37.5 },
-    { size: 38 }, { size: 38.5 }, { size: 39 }, { size: 39.5 }, { size: 40 },
-    { size: 40.5 }, { size: 41 }, { size: 41.5 }, { size: 42 }, { size: 42.5 },
-    { size: 43 }, { size: 44 }, { size: 44.5 }, { size: 45 }, { size: 45.5 },
-    { size: 46 }, { size: "S" }, { size: "M" }
-  ];
   const dispatch = useDispatch();
   let navigate = useNavigate();
   
@@ -142,19 +144,8 @@ export default function CategoryProduct() {
           <div className={`${displayPrice ? "hidden" : ""}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-5">
-            <input  type="text"  placeholder="Min"  className="w-full p-4 bg-gray-100"
-  value={minPrice}
-  onChange={handleMinPriceChange}
-/>
-<input
-  type="text"
-  placeholder="Max"
-  className="w-full p-4 bg-gray-100"
-  value={maxPrice}
-  onChange={handleMaxPriceChange}
-/>
-
-
+            <input  type="text"  placeholder="Min"  className="w-full p-4 bg-gray-100" value={minPrice} onChange={handleMinPriceChange}/>
+            <input  type="text"  placeholder="Max"  className="w-full p-4 bg-gray-100" value={maxPrice} onChange={handleMaxPriceChange}/>
             </div>
             <div className="flex flex-col gap-4 mt-2 pb-5">
             <div className="flex gap-2">
@@ -219,26 +210,15 @@ export default function CategoryProduct() {
           </div>
           <div className={`${displayCategory ? "hidden" : ""}`}>
           <div className="flex flex-col gap-3 pb-5">
-            <div className="flex gap-3">
-                    <input type="radio" name="1" />
-                    <label>Qısaboğaz çəkmələr</label>
-                </div>
-                <div className="flex gap-3">
-                    <input type="radio" name="1" />
-                    <label>Krossovka/ Kedlər</label>
-                </div>
-                <div className="flex gap-3">
-                    <input type="radio" name="1" />
-                    <label>Tərliklər</label>
-                </div>
-                <div className="flex gap-3">
-                    <input type="radio" name="1" />
-                    <label>Mokasinlər</label>
-                </div>
-                <div className="flex gap-3">
-                    <input type="radio" name="1" />
-                    <label>Tuflilər</label>
-                </div>
+            {filterCategory && filterCategory.categories ?(
+             filterCategory.categories.map((item,index) =>{
+              return <div className="flex gap-3" key={index}>
+              <input type="radio" name="1" />
+              <label>{item.title_az}</label>
+          </div>
+             })) : (
+              <p>No categories found.</p>
+            )}
             </div>
           </div>
         </div>
@@ -287,10 +267,11 @@ export default function CategoryProduct() {
           </div>
           <div className={`${displaySize ? "hidden" : ""}`}>
             <div className="flex flex-col gap-3 pb-5">
-              {sizes.map((item, index) => (
+              {filterCategory &&
+              filterCategory.sizes.map((item, index) => (
                 <div key={index} className="flex gap-2">
                   <input type="checkbox" />
-                  <label>{item.size}</label>
+                  <label>{item.title_az}</label>
                 </div>
               ))}
             </div>
