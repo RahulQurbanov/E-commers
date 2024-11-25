@@ -35,26 +35,45 @@ export default function CategoryProduct() {
         `https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}&max_price=${maxPrice}&min_price=${minPrice}`
       );
       const data = await response.json();
-      setPrice(data.results || []);
+      setCategoryClick(data.results || []); // Aralığa göre ürünleri güncelle
+      setCategoryLength(data.results.length); // Aralığa göre ürün sayısını güncelle
       console.log("Fiyat verileri:", data);
     } catch (error) {
       console.error("Fiyat verileri alınırken hata oluştu:", error);
     }
   }
+  
   const handlePriceChange = (min, max) => {
     console.log(`Price range selected: ${min} - ${max}`);
-    getPrice(min, max);
+    getPrice(min, max); // Fiyat aralığını gönder
   };
+  
 
   const [minPrice, setMinPrice] = useState("");
-const [maxPrice, setMaxPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  
+  const handleCustomPriceChange = (min, max) => {
+    const parsedMin = min ? parseInt(min) : 0;
+    const parsedMax = max ? parseInt(max) : Infinity;
+  
+    if (parsedMin >= 0 && parsedMax > parsedMin) {
+      getPrice(parsedMin, parsedMax);
+    }
+  };
+  
+  const handleMinPriceChange = (e) => {
+    const value = e.target.value;
+    setMinPrice(value);
+    handleCustomPriceChange(value, maxPrice); // Avtomatik olaraq dəyəri götür
+  };
+  
+  const handleMaxPriceChange = (e) => {
+    const value = e.target.value;
+    setMaxPrice(value);
+    handleCustomPriceChange(minPrice, value); // Avtomatik olaraq dəyəri götür
+  };
+  
 
-const handleCustomPriceChange = () => {
-  const min = minPrice ? parseInt(minPrice) : 0;
-  const max = maxPrice ? parseInt(maxPrice) : 1000;
-
-  getPrice(min, max);
-};
 
   
 
@@ -123,27 +142,39 @@ const handleCustomPriceChange = () => {
           <div className={`${displayPrice ? "hidden" : ""}`}>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-5">
-                <input type="text" placeholder="Min" className="w-full p-4 bg-gray-100" onChange={(e) => setMinPrice(e.target.value)} />
-                <input type="text" placeholder="Max" className="w-full p-4 bg-gray-100" onChange={(e) => setMaxPrice(e.target.value)} />
+            <input  type="text"  placeholder="Min"  className="w-full p-4 bg-gray-100"
+  value={minPrice}
+  onChange={handleMinPriceChange}
+/>
+<input
+  type="text"
+  placeholder="Max"
+  className="w-full p-4 bg-gray-100"
+  value={maxPrice}
+  onChange={handleMaxPriceChange}
+/>
+
+
             </div>
-               <div className="flex flex-col gap-4 mt-2 pb-5">
-               <div className="flex gap-2">
-                    <input type="radio" name="1" onChange={() => handlePriceChange(0, 100)} />
-                    <label> 0 - 100 AZN</label>
-                </div>
-                <div className="flex gap-2">
-                    <input type="radio" name="1" onChange={() => handlePriceChange(100, 200)} />
-                    <label> 100 - 200 AZN</label>
-                </div>
-                <div className="flex gap-2">
-                    <input type="radio" name="1" onChange={() => handlePriceChange(200, 300)} />
-                    <label> 200 - 300 AZN</label>
-                </div>
-                <div className="flex gap-2">
-                    <input type="radio" name="1" onChange={() => handlePriceChange(300, Infinity)} />
-                    <label> <i className="fa-solid fa-angle-right"></i>300 AZN</label>
-                </div>
-               </div>
+            <div className="flex flex-col gap-4 mt-2 pb-5">
+            <div className="flex gap-2">
+              <input type="radio" name="1" onChange={() => handlePriceChange(0, 100)} />
+              <label> 0 - 100 AZN</label>
+            </div>
+            <div className="flex gap-2">
+              <input type="radio" name="1" onChange={() => handlePriceChange(100, 200)} />
+              <label> 100 - 200 AZN</label>
+            </div>
+            <div className="flex gap-2">
+              <input type="radio" name="1" onChange={() => handlePriceChange(200, 300)} />
+              <label> 200 - 300 AZN</label>
+            </div>
+            <div className="flex gap-2">
+              <input type="radio" name="1" onChange={() => handlePriceChange(300, Infinity)} />
+              <label> <i className="fa-solid fa-angle-right"></i> 300 AZN</label>
+            </div>          
+          </div>
+
             </div>
           </div>
         </div>
@@ -328,19 +359,33 @@ const handleCustomPriceChange = () => {
             </div>
         </div>
         <div className="grid grid-cols-3 gap-5">
-          {categoryClick &&
-           categoryClick.map((item, index) =>{
-            return <div key={index}   onClick={() => getProductDetailId(item.product.id, item.image.items[0].file)}>
-               <div className="relative overflow-hidden group cursor-pointer">
-                <img src={item.image.items[0].file} className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110" />
-                <i class="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-               </div>
-               <p className=" text-[15px] mt-5">{item.product.title_az}</p>
-               <p className="text-xl font-bold">{item.price}AZN</p>
-            </div>
-           })
-          }
+  {categoryLength > 0 ? (
+    categoryClick.map((item, index) => (
+      <div
+        key={index}
+        onClick={() =>
+          getProductDetailId(item.product.id, item.image.items[0].file)
+        }
+      >
+        <div className="relative overflow-hidden group cursor-pointer">
+          <img
+            src={item.image.items[0].file}
+            className="w-[320px] h-[400px] transition-transform duration-700 ease-in-out transform group-hover:scale-110"
+          />
+          <i className="fa-regular fa-heart cursor-pointer absolute bottom-5 left-5 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
         </div>
+        <p className=" text-[15px] mt-5">{item.product.title_az}</p>
+        <p className="text-xl font-bold">{item.price}AZN</p>
+      </div>
+    ))
+  ) : (
+    <p className="text-center text-gray-500 col-span-3">
+      Uyğun məhsul tapılmadı.
+    </p>
+  )}
+</div>
+
+
       </div>
     </div>
   );
