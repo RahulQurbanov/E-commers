@@ -12,7 +12,8 @@ export default function Main(){
     async function getTrendProduct(){
       let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
       let trendProduct = data.trend_products;
-      console.log(trendProduct);
+      console.log("Trned", data)
+      console.log("TrendProduct",trendProduct);
       setTrend(trendProduct);
     }
     async function getCampaings(){
@@ -111,97 +112,3 @@ export default function Main(){
 }
 
 
-// import React, { useEffect, useState } from "react";
-// import Slider from "react-slick";
-// import { useNavigate } from "react-router-dom";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-
-// export default function Main() {
-//   const [trend, setTrend] = useState([]);
-//   const navigate = useNavigate(); // Yönlendirme işlemi için kullanacağız;
-
-//   async function getTrendProduct() {
-//     let data = await fetch(
-//       "https://test.mybrands.az/api/v1/products/top-sale-trend-products/"
-//     ).then((res) => res.json());
-//     setTrend(data.trend_products);
-//     console.log(data)
-//   }
-
-//   useEffect(() => {
-//     getTrendProduct();
-//   }, []);
-
-//   const sliderSettings = {
-//     infinite: true,
-//     speed: 500,
-//     slidesToShow: 6,
-//     slidesToScroll: 5,
-//     accessibility: true,
-//     responsive: [
-//       {
-//         breakpoint: 1024,
-//         settings: {
-//           slidesToShow: 2,
-//           slidesToScroll: 2,
-//         },
-//       },
-//       {
-//         breakpoint: 768,
-//         settings: {
-//           slidesToShow: 1,
-//           slidesToScroll: 1,
-//         },
-//       },
-//     ],
-//   };
-
-//   // Ürüne tıklama fonksiyonu
-//   const handleProductClick = (id) => {
-//     console.log("Tıklanan Ürün ID:", id); // ID'nin doğru geçip geçmediğini kontrol et
-//     navigate(`/product/${id}`); // Ürün detay sayfasına yönlendiriyoruz
-//   };
-
-//   return (
-//     <div className="w-[85%] m-auto font-montserrat">
-//       <div>
-//         <h1 className="text-[#131E38] text-3xl font-bold my-10">HAZIRDA TREND</h1>
-//       </div>
-//       <div className="relative">
-//         <Slider {...sliderSettings}>
-//           {trend &&
-//             trend.map((item, index) => {
-//               const isVisible = index === 0;
-//               return (
-//                 <div
-//                   key={index}
-//                   className="p-4"
-//                   aria-hidden={!isVisible} // Görünür olan slayt
-//                   tabIndex={isVisible ? 0 : -1}
-//                   onClick={() => handleProductClick(item.product.id)} // Ürüne tıklama
-//                   style={{ cursor: "pointer" }} // Tıklanabilir göster
-//                 >
-//                   <div className="relative">
-//                     <img
-//                       src={`https://test.mybrands.az${item.image.items[0].file}`}
-//                       alt={item.product.title_az}
-//                       className="w-[1050px] h-[300px]"
-//                     />
-//                     <i
-//                       className="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"
-//                       tabIndex="0"
-//                     ></i>
-//                   </div>
-//                   <p className="text-[15px] text-gray-500 mt-4 mb-6">
-//                     {item.product.title_az}
-//                   </p>
-//                   <p className="text-lg font-bold">${item.price}</p>
-//                 </div>
-//               );
-//             })}
-//         </Slider>
-//       </div>
-//     </div>
-//   );
-// }

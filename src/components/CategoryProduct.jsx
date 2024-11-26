@@ -267,13 +267,13 @@ export default function CategoryProduct() {
           </div>
           <div className={`${displaySize ? "hidden" : ""}`}>
             <div className="flex flex-col gap-3 pb-5">
-              {filterCategory &&
-              filterCategory.sizes.map((item, index) => (
+              {/* {filterCategory &&
+              filterCategory.categories.map((size, index) => (
                 <div key={index} className="flex gap-2">
                   <input type="checkbox" />
-                  <label>{item.title_az}</label>
+                  <label>{size.title_az}</label>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
