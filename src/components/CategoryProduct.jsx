@@ -87,18 +87,35 @@ export default function CategoryProduct() {
 
   //! Filter Category
 
+  const [categoryProductId, setCategoryProductId] = useState([]);
   const [categoryId, setCategoryId] = useState();
 
-  function getCategoryId(event){
-    setCategoryId(event.target.value);
-    console("id",event.target.value);
+  async function getCategoryProductId() {
+    console.log("API çağrısında kullanılan kategori ID'si:", categoryId);
+    try {
+      let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${categoryId}`).then(res => res.json());
+      setCategoryProductId(data);
+      console.log("FilterCategoryID", data);
+    } catch (error) {
+      console.error("API çağrısında hata:", error);
+    }
   }
+  
 
+
+
+  function getCategoryId(event) {
+    const id = event.target.value;
+    setCategoryId(id);
+    console.log("Selected Category ID:", id);
+  }
+  
   useEffect(() => {
     getcategoryClick();
+    getCategoryProductId();
     getFilterCategory();
   }, [selectedCategoryId]);
-
+  
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
@@ -220,8 +237,8 @@ export default function CategoryProduct() {
           <div className="flex flex-col gap-3 pb-5">
             {filterCategory && filterCategory.categories ?(
              filterCategory.categories.map((item,index) =>{
-              return <div className="flex gap-3" key={index}>
-              <input type="radio" name="1" onChange={getCategoryId} />
+              return <div className="flex gap-3" key={index} value={item.id}>
+              <input type="radio" name="1" value={item.id} onChange={getCategoryId} />
               <label>{item.title_az}</label>
           </div>
              })) : (
