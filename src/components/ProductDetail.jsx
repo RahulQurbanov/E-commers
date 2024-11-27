@@ -15,7 +15,6 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const defaultImage = selectedProductImage;
 
-  // API'den ürün detaylarını alır
   async function fetchProductDetail() {
     try {
       const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
@@ -27,7 +26,6 @@ export default function ProductDetail() {
       setProduct(data);
       console.log("ProductDetail:",data)
 
-      // İlk küçük resmi mainImage olarak ayarla
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -37,14 +35,12 @@ export default function ProductDetail() {
     }
   }
 
-  // selectedProductId değiştiğinde ürün bilgilerini getir
   useEffect(() => {
     if (selectedProductId) {
       fetchProductDetail();
     }
   }, [selectedProductId]);
 
-  // 'id' parametresi değiştiğinde selectedProductId'yi güncelle
   useEffect(() => {
     if (id && id !== selectedProductId) {
       dispatch(setSelectedProductId(id));

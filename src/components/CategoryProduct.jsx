@@ -2,7 +2,7 @@ import Item from "antd/es/list/Item";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { setProductId } from "./store/categoryProduct";
+import { setCategoryId, setProductId } from "./store/categoryProduct";
 import { setProductImage } from "./store/categoryProduct";
 
 export default function CategoryProduct() {
@@ -33,8 +33,8 @@ export default function CategoryProduct() {
     let data = await fetch('https://test.mybrands.az/api/v1/products/filter-items').then(res => res.json());
     setFilterCategory(data)
     console.log("FilterCategory",data);
+    console.log(data.categories[0].id,"Caetegorita")
   }
-
 
   //! Filter Price
 
@@ -47,9 +47,9 @@ export default function CategoryProduct() {
         `https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}&max_price=${maxPrice}&min_price=${minPrice}`
       );
       const data = await response.json();
-      setCategoryClick(data.results || []); // Aralığa göre ürünleri güncelle
-      setCategoryLength(data.results.length); // Aralığa göre ürün sayısını güncelle
-      console.log("Fiyat verileri:", data);
+      setCategoryClick(data.results || []);
+      setCategoryLength(data.results.length);
+      console.log("Fiyat verileri:", data.categories[0].id);
     } catch (error) {
       console.error("Fiyat verileri alınırken hata oluştu:", error);
     }
@@ -57,7 +57,7 @@ export default function CategoryProduct() {
   
   const handlePriceChange = (min, max) => {
     console.log(`Price range selected: ${min} - ${max}`);
-    getPrice(min, max); // Fiyat aralığını gönder
+    getPrice(min, max); 
   };
   
 
@@ -76,19 +76,27 @@ export default function CategoryProduct() {
   const handleMinPriceChange = (e) => {
     const value = e.target.value;
     setMinPrice(value);
-    handleCustomPriceChange(value, maxPrice); // Avtomatik olaraq dəyəri götür
+    handleCustomPriceChange(value, maxPrice);
   };
   
   const handleMaxPriceChange = (e) => {
     const value = e.target.value;
     setMaxPrice(value);
-    handleCustomPriceChange(minPrice, value); // Avtomatik olaraq dəyəri götür
+    handleCustomPriceChange(minPrice, value); 
   };
-  
+
+  //! Filter Category
+
+  const [categoryId, setCategoryId] = useState();
+
+  function getCategoryId(event){
+    setCategoryId(event.target.value);
+    console("id",event.target.value);
+  }
 
   useEffect(() => {
     getcategoryClick();
-    getFilterCategory()
+    getFilterCategory();
   }, [selectedCategoryId]);
 
   const handleColorChange = (color) => {
@@ -213,7 +221,7 @@ export default function CategoryProduct() {
             {filterCategory && filterCategory.categories ?(
              filterCategory.categories.map((item,index) =>{
               return <div className="flex gap-3" key={index}>
-              <input type="radio" name="1" />
+              <input type="radio" name="1" onChange={getCategoryId} />
               <label>{item.title_az}</label>
           </div>
              })) : (
