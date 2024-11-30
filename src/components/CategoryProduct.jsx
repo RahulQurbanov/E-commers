@@ -24,14 +24,13 @@ export default function CategoryProduct() {
     console.log("product",data)
   }
 
-
   //! Filter
   
   const [filterCategory, setFilterCategory] = useState([]);
 
   async function getFilterCategory(){
     let data = await fetch('https://test.mybrands.az/api/v1/products/filter-items').then(res => res.json());
-    setFilterCategory(data)
+    setFilterCategory(data);
     console.log("FilterCategory",data);
     console.log(data.categories[0].id,"Caetegorita")
   }
@@ -85,23 +84,27 @@ export default function CategoryProduct() {
     handleCustomPriceChange(minPrice, value); 
   };
 
-  //! Filter Category
+  // //! Filter Size
 
-  const [categoryProductId, setCategoryProductId] = useState([]);
-  const [categoryId, setCategoryId] = useState();
+  // const [categoryProductId, setCategoryProductId] = useState([]);
+  // const [categoryId, setCategoryId] = useState();
 
-  async function getCategoryProductId() {
-    console.log("API çağrısında kullanılan kategori ID'si:", categoryId);
-    try {
-      let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${categoryId}`).then(res => res.json());
-      setCategoryProductId(data);
-      console.log("FilterCategoryID", data);
-    } catch (error) {
-      console.error("API çağrısında hata:", error);
-    }
-  }
+  // async function getCategoryProductId() {
+  //   console.log("API çağrısında kullanılan kategori ID'si:", categoryId);
+  //   try {
+  //     let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${categoryId}`).then(res => res.json());
+  //     setCategoryProductId(data);
+  //     console.log("FilterCategoryID", data);
+  //   } catch (error) {
+  //     console.error("API çağrısında hata:", error);
+  //   }
+  // }
   
-
+  // useEffect(() => {
+  //   if (categoryId) {
+  //     getCategoryProductId();
+  //   }
+  // }, [categoryId]);
 
 
   function getCategoryId(event) {
@@ -237,7 +240,7 @@ export default function CategoryProduct() {
           <div className="flex flex-col gap-3 pb-5">
             {filterCategory && filterCategory.categories ?(
              filterCategory.categories.map((item,index) =>{
-              return <div className="flex gap-3" key={index} value={item.id}>
+              return <div className="flex gap-3" key={index}>
               <input type="radio" name="1" value={item.id} onChange={getCategoryId} />
               <label>{item.title_az}</label>
           </div>
@@ -292,13 +295,13 @@ export default function CategoryProduct() {
           </div>
           <div className={`${displaySize ? "hidden" : ""}`}>
             <div className="flex flex-col gap-3 pb-5">
-              {/* {filterCategory &&
-              filterCategory.categories.map((size, index) => (
+              {filterCategory &&
+              filterCategory.sizes.map((item, index) => (
                 <div key={index} className="flex gap-2">
                   <input type="checkbox" />
-                  <label>{size.title_az}</label>
+                  <label>{item.title_az}</label>
                 </div>
-              ))} */}
+              ))}
             </div>
           </div>
         </div>

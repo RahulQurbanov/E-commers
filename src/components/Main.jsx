@@ -60,7 +60,7 @@ export default function Main(){
         </div>
         <div className="relative">
           <Slider {...sliderSettings}>
-            {/* {trend &&
+            {trend &&
               trend.map((item, index) => (
                 <div key={index} className="p-4">
                   <div className="relative">
@@ -74,7 +74,7 @@ export default function Main(){
                   <p className="text-[15px] text-gray-500 mt-4 mb-6">{item.product.title_az}</p>
                   <p className="text-lg font-bold">${item.price}</p>
                 </div>
-              ))} */}
+              ))}
           </Slider>
         </div>
       </div>
