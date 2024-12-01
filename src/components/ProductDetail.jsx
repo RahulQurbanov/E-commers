@@ -24,7 +24,8 @@ export default function ProductDetail() {
       }
       const data = await response.json();
       setProduct(data);
-      console.log("ProductDetail:",data)
+      console.log("ProductDetail:",data);
+      console.log("ProductBrand:",data.manufacturer.title);
 
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);

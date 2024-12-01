@@ -4,11 +4,16 @@ import { Carousel } from "antd";
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
+import { useDispatch, useSelector } from "react-redux";
+import { setCategoryId } from "./store/categoryProduct";
 
 
 export default function Main(){
     const [campaigns,setCampaings] = useState([]);
     const [trend, setTrend] = useState([]);
+    const dispatch = useDispatch();
+    const selectedCategoryId = useSelector((state) => state.category.selectedCategoryId);
+
     async function getTrendProduct(){
       let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
       let trendProduct = data.trend_products;
@@ -19,6 +24,13 @@ export default function Main(){
         let data = await fetch('https://test.mybrands.az/api/v1/campaigns').then(res=>res.json());
         setCampaings(data)
     }
+    // useEffect(() => {
+    //   if (selectedCategoryId) {
+    //     getcategoryClick();
+    //   }
+    // }, [selectedCategoryId]);
+    
+    
     useEffect(()=>{
         getCampaings();
         getTrendProduct();
@@ -83,13 +95,23 @@ export default function Main(){
       <div>
         <div className="bg-[url('./src/image/sweatshirt.png')] bg-cover h-[620px] w-[100%] relative">
           <p className="absolute text-[41px] text-white bottom-28 left-[67px] font-bold">Yeni sviterlər</p>
-          <button className="bg-white py-4 px-8 text-blue-950 text-sm font-bold absolute bottom-20 left-[68px] hover:mb-1 hover:transition-transform duration-300 ease-in-out">İNDİ AL</button>
+          <button
+          onClick={() => dispatch(setCategoryId(1))}
+          className="bg-white py-4 px-8 text-blue-950 text-sm font-bold absolute bottom-20 left-[68px] hover:mb-1 hover:transition-transform duration-300 ease-in-out">İNDİ AL</button>
         </div>
       </div>
       <div>
         <div className="bg-[url('./src/image/shoes.png')] bg-cover h-[620px] w-[100%] relative">
           <p className="absolute text-[41px] text-white bottom-28 left-[67px] font-bold">YENİ AYAQQABILAR</p>
-          <button className="bg-white py-4 px-8 text-blue-950 text-sm font-bold absolute bottom-20 left-[68px] hover:mb-1 hover:transition-transform duration-300 ease-in-out">İNDİ AL</button>
+          <button
+  onClick={() => {
+    console.log('Category ID dispatched: 1');
+    dispatch(setCategoryId(1));
+  }}
+  className="bg-white py-4 px-8 text-blue-950 text-sm font-bold absolute bottom-20 left-[68px] hover:mb-1 hover:transition-transform duration-300 ease-in-out">
+  İNDİ AL
+</button>
+
         </div>
       </div>
     </div>
