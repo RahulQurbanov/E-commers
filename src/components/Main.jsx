@@ -17,19 +17,12 @@ export default function Main(){
     async function getTrendProduct(){
       let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
       let trendProduct = data.trend_products;
-      console.log("TrendProduct",trendProduct);
       setTrend(trendProduct);
     }
     async function getCampaings(){
         let data = await fetch('https://test.mybrands.az/api/v1/campaigns').then(res=>res.json());
         setCampaings(data)
     }
-    // useEffect(() => {
-    //   if (selectedCategoryId) {
-    //     getcategoryClick();
-    //   }
-    // }, [selectedCategoryId]);
-    
     
     useEffect(()=>{
         getCampaings();

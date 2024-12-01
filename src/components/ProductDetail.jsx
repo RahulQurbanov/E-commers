@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReactImageMagnify from "react-image-magnify";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductId as setSelectedProductId } from "./store/categoryProduct";
-import { setProductImage as selectedProductImage } from "./store/categoryProduct";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -18,33 +18,26 @@ export default function ProductDetail() {
   async function fetchProductDetail() {
     try {
       const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
-      console.log(selectedProductId);
       if (!response.ok) {
         throw new Error("Ürün bilgisi alınamadı.");
       }
       const data = await response.json();
       setProduct(data);
-      console.log("ProductDetail:",data);
-      console.log("ProductBrand:",data.manufacturer.title);
 
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
     } catch (error) {
-      console.error("Hata:", error);
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    if (selectedProductId) {
-      fetchProductDetail();
-    }
-  }, [selectedProductId]);
-
-  useEffect(() => {
     if (id && id !== selectedProductId) {
       dispatch(setSelectedProductId(id));
+    }
+    if (selectedProductId) {
+      fetchProductDetail();
     }
   }, [id, selectedProductId, dispatch]);
 
@@ -84,28 +77,16 @@ export default function ProductDetail() {
 
           {/* Main Image - Zoomable */}
           <div className="w-[500px]">
-            <ReactImageMagnify
-              {...{
-                smallImage: {
-                  alt: "Main Product",
-                  isFluidWidth: true,
-                  src: mainImage,
-                },
-                largeImage: {
-                  src: mainImage,
-                  width: 1200,
-                  height: 1000,
-                },
-                lensStyle: { backgroundColor: "rgba(255, 255, 255, 0.3)" },
-                enlargedImageContainerDimensions: {
-                  width: "150%",
-                  height: "95%",
-                },
-                enlargedImagePosition: "beside",
-              }}
-            />
+            <Zoom>
+              <img
+                src={mainImage}
+                alt="Main Product"
+                className="w-full h-auto"
+              />
+            </Zoom>
           </div>
         </div>
+
         {/* Product Details */}
         <div className="mt-6 flex flex-col items-center gap-6 w-[58%] font-circe">
           <div className="flex flex-col gap-[1px]">
@@ -120,15 +101,15 @@ export default function ProductDetail() {
               Çatdırılma və geri qaytarılma haqqında məlumat
             </a>
           </div>
-          <div className="flex items-center gap-5 cursor-pointer" onClick={(item)=>{item.style.deceration = "underline"}}>
-            {product.variations.map((size,index) =>{
-              return <div key={index}>
+          <div className="flex items-center gap-5 cursor-pointer">
+            {product.variations.map((size, index) => (
+              <div key={index}>
                 <p>{size.size.title_az}</p>
               </div>
-            })}
+            ))}
           </div>
           <div className="flex items-center gap-5 text-red-500 text-lg">
-            <p><i class="fa-solid fa-clock-rotate-left"></i></p>
+            <p><i className="fa-solid fa-clock-rotate-left"></i></p>
             <p>MƏHDUD SAYDA</p>
           </div>
           <div className="flex flex-col w-[90%] gap-[20px]">

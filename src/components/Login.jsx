@@ -98,7 +98,7 @@ console.log(JSON.stringify(authData))
         <div className="w-[77%] flex flex-col m-auto gap-5 text-black mt-5">
           {email && (
             <>
-              <input type="text" placeholder="Email address" className="p-3 w-[100%] border-2 border-slate-200 bg-red-200" value={authEmail} onChange={handleChangeEmail} />
+              <input type="text" placeholder="Email address" className="p-3 w-[100%] border-2 border-slate-200" value={authEmail} onChange={handleChangeEmail} />
               <input
                 type="text"
                 value={"+994" + phoneNumber}
@@ -109,7 +109,7 @@ console.log(JSON.stringify(authData))
                 <input type="text" placeholder="Ad" className="p-3 w-[100%] border-2 border-slate-200" />
                 <input type="text" placeholder="Soyad" className="p-3 w-[100%] border-2 border-slate-200" />
               </div>
-              <input type="password" placeholder="Şifrə" className="p-3 w-[100%] border-2 border-slate-200 bg-red-200" value={authPassword} onChange={handleChangePassword} />
+              <input type="password" placeholder="Şifrə" className="p-3 w-[100%] border-2 border-slate-200" value={authPassword} onChange={handleChangePassword} />
               <input type="password" placeholder="Şifrəni təsdiq edin" className="p-3 w-[100%] border-2 border-slate-200" />
               <div className="flex flex-col gap-1">
                 <p>Doğum tarixi</p>
@@ -200,7 +200,7 @@ console.log(JSON.stringify(authData))
             <span className="text-[11px]">Hesab yaratmaqla bizim <span className="underline cursor-pointer">Şərt və Qaydalarımızı</span> & <span className="underline cursor-pointer">Məxfilik siyasətimiz</span>i qəbul edirsiniz.</span>
           </div>
           <div className="w-[100%] flex justify-center items-center mt-5">
-            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white" onClick={isLogged?Logout:Login}>Qeydiyyatdan keçin</button>
+            <button className="py-4 px-[104px] bg-[#212D4A] text-xl text-white" onClick={getMain}>Qeydiyyatdan keçin</button>
           </div>
         </div>
       </div>

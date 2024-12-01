@@ -18,18 +18,12 @@ export default function CategoryProduct() {
   const [categoryLength, setCategoryLength] = useState(0);
   const selectedCategoryId = useSelector((state) => state.category.selectedCategoryId);
 
+
   async function getcategoryClick() {
     let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}`).then(res => res.json());
     setCategoryLength(data.results.length);
     setCategoryClick(data.results || []);
-    console.log("product",data);
-    const brandFilter = selectedBrands.join(","); // Convert selected brands to string
-    const response = await fetch(
-      `https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}&brands=${brandFilter}`
-    );
-    const dataBrand = await response.json();
-    setCategoryLength(dataBrand.results.length);
-    setCategoryClick(dataBrand.results || []);
+    console.log("product",data)
   }
 
   //! Filter
@@ -108,25 +102,6 @@ export default function CategoryProduct() {
     }
   }
   
-
-  //! Filter Brand
-  const [selectedBrands, setSelectedBrands] = useState([]);
-
-
-  const brands = [
-    { id: 1, name: "Adidas" },
-    { id: 2, name: "Calvin Klein" },
-    { id: 3, name: "Tommy Hilfiger" },
-  ];
-  
-  const handleBrandChange = (brandId) => {
-    setSelectedBrands((prevSelectedBrands) =>
-      prevSelectedBrands.includes(brandId)
-        ? prevSelectedBrands.filter((id) => id !== brandId)
-        : [...prevSelectedBrands, brandId]
-    );
-  };
-
   useEffect(() => {
     if (categoryId) {
       getCategoryProductId();
@@ -291,17 +266,19 @@ export default function CategoryProduct() {
           </div>
           <div className={`${displayBrand ? "hidden" : ""}`}>
           <div className="flex flex-col gap-3 pb-5">
-            {brands.map((brand) => (
-              <div key={brand.id} className="flex gap-3">
-                <input
-                  type="checkbox"
-                  onChange={() => handleBrandChange(brand.id)}
-                  checked={selectedBrands.includes(brand.id)}
-                />
-                <label>{brand.name}</label>
-              </div>
-            ))}
-          </div>
+            <div className="flex gap-3">
+                    <input type="checkbox" name="1" />
+                    <label>Adidas</label>
+                </div>
+                <div className="flex gap-3">
+                    <input type="checkbox" name="1" />
+                    <label>Calvin Klein</label>
+                </div>
+                <div className="flex gap-3">
+                    <input type="checkbox" name="1" />
+                    <label>Tommy Hilfiger</label>
+                </div>
+            </div>
           </div>
         </div>
 

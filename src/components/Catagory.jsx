@@ -40,7 +40,7 @@ export default function Catagory() {
     }, []);
 
     function handleCategoryClick(id) {
-        dispatch(setCategoryId(id)); // Redux action göndərilir
+        dispatch(setCategoryId(id));
         navigate("/category-product");
     }
 
