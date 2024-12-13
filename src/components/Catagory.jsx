@@ -49,15 +49,13 @@ export default function Catagory() {
             <div className="w-[85%] m-auto relative">
                 <ul className="flex items-center gap-5 pt-5 text-slate-950 cursor-pointer font-semibold relative">
                     <li onClick={getProduct}>Məhsullar</li>
-                    <li>Brendlər</li>
-                    <li>Rəqəmsal Hədiyyə kartları</li>
                     <div 
                         onMouseEnter={() => setHover(true)} 
                         onMouseLeave={() => setHover(false)}
                     >
                         <li>Geyimler</li>
                         {hover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-full grid grid-cols-3 place-content-center text-sm gap-3">
                                 {clothes.map((item, index) => (
                                     <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
@@ -70,7 +68,7 @@ export default function Catagory() {
                     >
                         <li>Ayaqqabılar</li>
                         {shoesHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[900px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-full grid grid-cols-3 place-content-center text-sm gap-3">
                                 {shoes.map((item, index) => (
                                     <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
@@ -83,7 +81,7 @@ export default function Catagory() {
                     >
                         <li>Çanta və Aksesuarlar</li>
                         {bagHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-full grid grid-cols-3 place-content-center text-sm gap-3">
                                 {bags.map((item, index) => (
                                     <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
@@ -96,7 +94,7 @@ export default function Catagory() {
                     >
                         <li>Gözəllik</li>
                         {beautyHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-full grid grid-cols-3 place-content-center text-sm gap-3">
                                 {beauty.map((item, index) => (
                                     <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
@@ -109,14 +107,13 @@ export default function Catagory() {
                     >
                         <li>Ev</li>
                         {homeHover && (
-                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-[800px] grid grid-cols-3 place-content-center text-sm gap-3">
+                            <div className="absolute right-0 font-normal z-10 bg-white p-10 mt-1 shadow-lg rounded  w-full grid grid-cols-3 place-content-center text-sm gap-3">
                                 {home.map((item, index) => (
                                     <p key={index} onClick={() => handleCategoryClick(item.id)}>{item.title_az}</p>
                                 ))}
                             </div>
                         )}
                     </div>
-                    <li className="text-red-500">Endirim</li>
                 </ul>
             </div>
         </div>

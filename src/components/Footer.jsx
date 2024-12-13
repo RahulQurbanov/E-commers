@@ -1,5 +1,6 @@
 export default function Footer(){
-    return <div>
+    return <div className="bg-black">
+
         <div className="bg-[#212D4A]">
             <div className="w-[75%] m-auto flex justify-between items-center text-white py-14">
                 <div >
@@ -21,40 +22,40 @@ export default function Footer(){
                 </div>
             </div>
         </div>
-        <div className="w-[85%] m-auto flex justify-between mt-12">
+        <div className="w-[85%] m-auto flex justify-between mt-12 text-white">
             <div className="flex flex-col">
                 <h2 className="text-lg font-bold mb-5">Şirkət</h2>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Haqqımızda</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Haqqımızda</p></a>
             </div>
             <div className="flex flex-col gap-4">
                 <h2 className="text-lg font-bold mb-5">Müştərilər</h2>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Ödəniş və Çatdırılma</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Qaytarılma siyasəti</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Müştəri xidmətləri</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Ödəniş və Çatdırılma</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Qaytarılma siyasəti</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Müştəri xidmətləri</p></a>
             </div>
             <div className="flex flex-col gap-4">
                 <h2 className="text-lg font-bold mb-5">Mağaza</h2>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Qadınlar</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Kişilər</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Uşaqlar</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Endirim</p></a>               
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Qadınlar</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Kişilər</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Uşaqlar</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Endirim</p></a>               
             </div>
             <div className="flex flex-col gap-4">
                 <h2 className="text-lg font-bold mb-5">Hesab</h2>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Qeydiyyat</p></a>
-                <a href="#"><p className="cursor-pointer text-sm text-gray-500 hover:underline">Sifarişlərim</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Qeydiyyat</p></a>
+                <a href="#"><p className="cursor-pointer text-sm text-[#b2b2b2] hover:underline">Sifarişlərim</p></a>
             </div>
             <div className="flex flex-col gap-9">
             <div className="flex items-center gap-2">
             <i class="fa-regular fa-envelope text-2xl"></i>
-            <a href="#"><p className="text-sm font-bold hover:underline m-0">help@mybrands.az</p></a>
+            <a href="#"><p className="text-sm font-bold hover:underline m-0">help@name.az</p></a>
             </div>
             <div>
                 <h2 className="text-lg font-bold hover:underline cursor-pointer">+994504114114</h2>
-                <p className="text-gray-500 text-sm">Online mağaza</p>
+                <p className="text-[#b2b2b2] text-sm">Online mağaza</p>
             </div>
             <div>
-                <p className="w-[340px] text-gray-500 text-[12px]">Müştəri xidmətləri mərkəzimizlə hər gün 09:00 - 18:00-dək əlaqə saxlaya bilərsiniz.</p>
+                <p className="w-[340px] text-[#b2b2b2] text-[12px]">Müştəri xidmətləri mərkəzimizlə hər gün 09:00 - 18:00-dək əlaqə saxlaya bilərsiniz.</p>
             </div>
             </div>
         </div>
@@ -78,9 +79,9 @@ export default function Footer(){
                 </div>
             </div>
         </div>
-        <div className="w-[85%] m-auto flex justify-between items-center text-[12px] my-5">
+        <div className="w-[85%] m-auto flex justify-between items-center text-[12px] my-5 text-white">
             <div>
-             <p className="cursor-text">© MYBRANDS - BÜTÜN HÜQUQLAR QORUNUR</p>
+             <p className="cursor-text">© BÜTÜN HÜQUQLAR QORUNUR</p>
             </div>
             <div className="flex items-center gap-7">
                 <p className="cursor-pointer hover:underline">Məxfilik Siyasəti </p>

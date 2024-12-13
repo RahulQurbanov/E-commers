@@ -83,7 +83,6 @@ export default function CategoryProduct() {
     setMaxPrice(value);
     handleCustomPriceChange(minPrice, value); 
   };
-  
 
   useEffect(() => {
     getcategoryClick();

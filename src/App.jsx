@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import WishList from "./components/WishList";
 import ProductDetail from "./components/ProductDetail";
 import CategoryProduct from "./components/CategoryProduct";
+import AddToCard from "./components/AddToCard";
 
 function App() {
   const router = createBrowserRouter([
@@ -19,6 +20,7 @@ function App() {
         { path: "/category-product", element: <CategoryProduct /> },
         { path: "/wishlist", element: <WishList /> },
         { path: "/product-detail", element: <ProductDetail /> },
+        { path: "/add-card", element: <AddToCard /> },
       ],
     },
   ]);

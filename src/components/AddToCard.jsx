@@ -1,28 +1,72 @@
-export default function AddToCard() {
-    return (
-        <div className="w-[38%] py-5 pl-4 pr-5 shadow-black shadow-2xl relative h-[55vh] overflow-y-auto m-auto">
-           <div className="flex flex-col h-[48vh] overflow-scroll">
-           <div className="flex justify-between border-b-[1px] border-b-[#cfcfcf] pb-5 mb-5">
-                <div className="flex gap-3">
-                    <div>
-                        <img src="./src/image/cins.jpeg" alt="" className="w-[100%] h-[135px]" />
-                    </div>
-                    <div>
-                        <p className="font-bold text-[20px]">179.00$</p>
-                        <p className="text-[13px] font-semibold">Calvin Klein, Üst geyimi</p>
-                        <p>x1</p>
-                    </div>
-                </div>
-                <div className="text-gray-500 cursor-pointer flex gap-3 flex-row pr-5">
-                    <i className="fa-solid fa-trash bg-gray-200 rounded-2xl p-2 h-[32px]"></i>
-                    <i className="fa-solid fa-heart bg-gray-200 rounded-2xl p-2 h-[32px]"></i>
-                </div>
-            </div>
-            </div>
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, removeFromCard } from "./store/categoryProduct";
+import { useNavigate } from "react-router";
 
-            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl w-[94%] absolute bottom-0 left-4 z-10">
-                Səbətə keçmək
+export default function AddToCard() {
+  const addToCard = useSelector(state => state.category.addcard);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function handleCard(id) {
+    dispatch(removeFromCard(id));
+  }
+
+  function navigateProduct() {
+    navigate("/product");
+  }
+
+  return (
+    <div className="bg-[#F4F4F4]">
+      <div className="bg-[#F4F4F4] w-[85%] m-auto">
+        {addToCard.length === 0 ? (
+          <div className="flex justify-center items-center flex-col p-24 gap-5">
+            <i className="fa-regular fa-heart cursor-pointer text-[40px] bg-white py-6 px-7 rounded-[999px] text-gray-300 mb-7"></i>
+            <p className="text-[#131E38] text-[40px] font-bold">Card siyahınız boşdur</p>
+            <p className="text-[17px]">Məhsulu seçin</p>
+            <button
+              className="bg-[#131E38] w-[39%] m-auto p-5 text-white text-[17px] font-semibold"
+              onClick={navigateProduct}
+            >
+              MƏHSULLARI GÖSTƏR
             </button>
-        </div>
-    );
+          </div>
+        ) : (
+          <div className="p-4 flex flex-col gap-10 flex-wrap justify-center">
+            {addToCard.map((product) => (
+              <div className="flex items-center justify-between" key={product.id}>
+                <div className="flex items-center">
+                  <div className="relative">
+                    <img src={product.image} alt={product.title} className="w-[135px]" />
+                    <i
+                      className="fa-solid fa-trash absolute bottom-5 right-5 text-red-500 text-[20px] cursor-pointer"
+                      onClick={() => handleCard(product.id)}
+                    ></i>
+                  </div>
+                  <div className="flex flex-col ml-5">
+                    <p className="font-bold mt-1 text-xl">{product.title}</p>
+                    <p className="font-bold text-lg">{product.price} AZN</p>
+                  </div>
+                </div>
+                <div className="flex items-center mr-24">
+                  <button
+                    className="bg-gray-400 px-[10px] py-1 rounded-full"
+                    onClick={() => dispatch(decrement(product.id))}
+                  >
+                    -
+                  </button>
+                  <p className="mt-5 ml-5 mr-5 font-bold text-xl">{product.quantity}</p>
+                  <button
+                    className="bg-gray-400 px-2 py-1 rounded-full"
+                    onClick={() => dispatch(increment(product.id))}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }

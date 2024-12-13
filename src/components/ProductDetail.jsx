@@ -4,6 +4,8 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setProductId as setSelectedProductId } from "./store/categoryProduct";
+import { addToWishlist } from "./store/categoryProduct";
+import { addToCard } from "./store/categoryProduct";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -52,6 +54,25 @@ export default function ProductDetail() {
   const handleThumbnailClick = (imageFile) => {
     setMainImage(imageFile || defaultImage);
   };
+
+
+function handleAddToWishlist() {
+  dispatch(addToWishlist({
+    id: product.id,
+    title: product.manufacturer.title,
+    image: mainImage,
+    price: product.variations[0].price,
+  }));
+}
+
+function handleAddToCard() {
+  dispatch(addToCard({
+    id: product.id,
+    title: product.manufacturer.title,
+    image: mainImage,
+    price: product.variations[0].price,
+  }));
+}
 
   return (
     <div className="w-[79%] m-auto p-4 flex flex-col">
@@ -113,10 +134,10 @@ export default function ProductDetail() {
             <p>MƏHDUD SAYDA</p>
           </div>
           <div className="flex flex-col w-[90%] gap-[20px]">
-            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl">
+            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl" onClick={handleAddToCard}>
               Səbətə əlavə et
             </button>
-            <button className="text-[#212D4A] bg-gray-100 py-3 px-7 text-xl">
+            <button  className="text-[#212D4A] bg-gray-100 py-3 px-7 text-xl" onClick={handleAddToWishlist}>
               <i className="fa-regular fa-heart pr-4"></i>Arzu olunanlara əlavə et
             </button>
           </div>
