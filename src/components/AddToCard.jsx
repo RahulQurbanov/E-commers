@@ -7,6 +7,10 @@ export default function AddToCard() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const calculateTotal = () => {
+    return addToCard.reduce((total, product) => total + product.price * product.quantity, 0).toFixed(2);
+  };
+
   function handleCard(id) {
     dispatch(removeFromCard(id));
   }
@@ -64,6 +68,9 @@ export default function AddToCard() {
                 </div>
               </div>
             ))}
+           <div className="flex justify-end items-end">
+           <p className="font-bold text-lg text-red-500">Total: {calculateTotal()}</p>
+           </div>
           </div>
         )}
       </div>

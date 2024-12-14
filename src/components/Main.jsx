@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import 'antd/dist/reset.css';
 import { Carousel } from "antd";
-import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
 import { useDispatch, useSelector } from "react-redux";
@@ -56,29 +55,6 @@ export default function Main() {
         );
     };
 
-    const sliderSettings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 6,
-        slidesToScroll: 5,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    };
-
     return (
         <>
             <Carousel arrows dots autoplay autoplaySpeed={2000} className="w-[85%] m-auto">
@@ -95,23 +71,25 @@ export default function Main() {
                     <h1 className="text-[#131E38] text-3xl font-bold my-10">HAZIRDA TREND</h1>
                 </div>
                 <div className="relative">
-                    <Slider {...sliderSettings}>
+                    <div className="grid grid-cols-4 gap-5 mb-10">
                         {trend &&
                             trend.map((item, index) => (
-                                <div key={index} className="p-4">
+                                <div key={index} className=" border-gray-200 border-2 rounded-lg cursor-pointer">
                                     <div className="relative">
                                         <img
                                             src={`https://test.mybrands.az${item.image.items[0].file}`}
-                                            className="w-[1050px] h-[300px]"
+                                            className=" w-full h-[300px] rounded-lg"
                                             alt="Trend Ürün"
                                         />
                                         <i className="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
                                     </div>
-                                    <p className="text-[15px] text-gray-500 mt-4 mb-6">{item.product.title_az}</p>
+                                    <div className="flex flex-col pl-5">
+                                    <p className="text-[17px] text-gray-500 mt-4 mb-6">{item.product.title_az}</p>
                                     <p className="text-lg font-bold">{item.price} AZN</p>
+                                    </div>
                                 </div>
                             ))}
-                    </Slider>
+                    </div>
                 </div>
             </div>
             <div className="w-[85%] m-auto flex rounded-3xl">

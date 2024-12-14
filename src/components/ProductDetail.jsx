@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setProductId as setSelectedProductId } from "./store/categoryProduct";
 import { addToWishlist } from "./store/categoryProduct";
 import { addToCard } from "./store/categoryProduct";
+import { notification } from "antd";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -16,6 +17,8 @@ export default function ProductDetail() {
   const selectedProductImage = useSelector((state) => state.category.selectedProductImage);
   const dispatch = useDispatch();
   const defaultImage = selectedProductImage;
+  const wishList = useSelector((state) => state.category.wishlist);
+  const addCard = useSelector((state) => state.category.addcard);
 
   async function fetchProductDetail() {
     try {
@@ -25,6 +28,8 @@ export default function ProductDetail() {
       }
       const data = await response.json();
       setProduct(data);
+      console.log(data)
+
 
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
@@ -63,6 +68,11 @@ function handleAddToWishlist() {
     image: mainImage,
     price: product.variations[0].price,
   }));
+  notification.success({
+    message: "Uğurlu əməliyyat",
+    description: "Məhsul favoritlərə əlavə edildi!",
+    placement: "topRight",
+  });
 }
 
 function handleAddToCard() {
@@ -72,6 +82,11 @@ function handleAddToCard() {
     image: mainImage,
     price: product.variations[0].price,
   }));
+  notification.success({
+    message: "Uğurlu əməliyyat",
+    description: "Məhsul carda əlavə edildi!",
+    placement: "topRight",
+  });
 }
 
   return (
@@ -123,21 +138,19 @@ function handleAddToCard() {
             </a>
           </div>
           <div className="flex items-center gap-5 cursor-pointer">
-            {product.variations.map((size, index) => (
-              <div key={index}>
-                <p>{size.size.title_az}</p>
-              </div>
-            ))}
+            <p className="text-sm">Kateqoriya: {product.gender.title_az}</p>
           </div>
           <div className="flex items-center gap-5 text-red-500 text-lg">
             <p><i className="fa-solid fa-clock-rotate-left"></i></p>
             <p>MƏHDUD SAYDA</p>
           </div>
           <div className="flex flex-col w-[90%] gap-[20px]">
-            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl" onClick={handleAddToCard}>
+            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl" onClick={handleAddToCard} disabled={addCard.some((item) => item.id === product.id)}>
               Səbətə əlavə et
             </button>
-            <button  className="text-[#212D4A] bg-gray-100 py-3 px-7 text-xl" onClick={handleAddToWishlist}>
+            <button  className="text-[#212D4A] bg-gray-100 py-3 px-7 text-xl" onClick={handleAddToWishlist}
+              disabled={wishList.some((item) => item.id === product.id)}
+              >
               <i className="fa-regular fa-heart pr-4"></i>Arzu olunanlara əlavə et
             </button>
           </div>
@@ -169,3 +182,4 @@ function handleAddToCard() {
     </div>
   );
 }
+
