@@ -20,6 +20,9 @@ export default function ProductDetail() {
   const wishList = useSelector((state) => state.category.wishlist);
   const addCard = useSelector((state) => state.category.addcard);
 
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
+
   async function fetchProductDetail() {
     try {
       const response = await fetch(`https://test.mybrands.az/api/v1/products/${selectedProductId}`);
@@ -28,9 +31,6 @@ export default function ProductDetail() {
       }
       const data = await response.json();
       setProduct(data);
-      console.log(data)
-
-
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -48,6 +48,11 @@ export default function ProductDetail() {
     }
   }, [id, selectedProductId, dispatch]);
 
+  useEffect(() => {
+    setIsInWishlist(wishList.some((item) => item.id === product?.id));
+    setIsInCart(addCard.some((item) => item.id === product?.id));
+  }, [wishList, addCard, product]);
+
   if (loading) {
     return <p>Yükleniyor...</p>;
   }
@@ -60,40 +65,41 @@ export default function ProductDetail() {
     setMainImage(imageFile || defaultImage);
   };
 
+  function handleAddToWishlist() {
+    dispatch(addToWishlist({
+      id: product.id,
+      title: product.manufacturer.title,
+      image: mainImage,
+      price: product.variations[0].price,
+    }));
+    setIsInWishlist(true);
+    notification.success({
+      message: "Uğurlu əməliyyat",
+      description: "Məhsul favoritlərə əlavə edildi!",
+      placement: "topRight",
+    });
+  }
 
-function handleAddToWishlist() {
-  dispatch(addToWishlist({
-    id: product.id,
-    title: product.manufacturer.title,
-    image: mainImage,
-    price: product.variations[0].price,
-  }));
-  notification.success({
-    message: "Uğurlu əməliyyat",
-    description: "Məhsul favoritlərə əlavə edildi!",
-    placement: "topRight",
-  });
-}
-
-function handleAddToCard() {
-  dispatch(addToCard({
-    id: product.id,
-    title: product.manufacturer.title,
-    image: mainImage,
-    price: product.variations[0].price,
-  }));
-  notification.success({
-    message: "Uğurlu əməliyyat",
-    description: "Məhsul carda əlavə edildi!",
-    placement: "topRight",
-  });
-}
+  function handleAddToCard() {
+    dispatch(addToCard({
+      id: product.id,
+      title: product.manufacturer.title,
+      image: mainImage,
+      price: product.variations[0].price,
+    }));
+    setIsInCart(true);
+    notification.success({
+      message: "Uğurlu əməliyyat",
+      description: "Məhsul carda əlavə edildi!",
+      placement: "topRight",
+    });
+  }
 
   return (
-    <div className="w-[79%] m-auto p-4 flex flex-col">
-      <div className="flex gap-32">
+    <div className="w-full md:w-[79%] mx-auto p-4 flex flex-col">
+      <div className="flex flex-wrap md:flex-nowrap gap-8 md:gap-32">
         {/* Product Images */}
-        <div className="flex gap-7 w-[42%] m-auto">
+        <div className="flex flex-wrap lg:flex-nowrap gap-7 w-full md:w-[42%] m-auto">
           {/* Thumbnails */}
           <div className="w-[85px] flex flex-col gap-2 cursor-pointer">
             {product?.variations?.[0]?.image?.items?.length > 0 ? (
@@ -112,7 +118,7 @@ function handleAddToCard() {
           </div>
 
           {/* Main Image - Zoomable */}
-          <div className="w-[500px]">
+          <div className="w-full md:w-[500px]">
             <Zoom>
               <img
                 src={mainImage}
@@ -124,8 +130,8 @@ function handleAddToCard() {
         </div>
 
         {/* Product Details */}
-        <div className="mt-6 flex flex-col items-center gap-6 w-[58%] font-circe">
-          <div className="flex flex-col gap-[1px]">
+        <div className="mt-6 flex flex-col items-center gap-6 w-full md:w-[58%] font-circe">
+          <div className="flex flex-col gap-1">
             <span className="text-2xl font-bold">{product.manufacturer.title}</span>
             <span className="text-[13px] text-gray-400 text-center font-light">
               {product.categories[0].title_az}
@@ -144,22 +150,31 @@ function handleAddToCard() {
             <p><i className="fa-solid fa-clock-rotate-left"></i></p>
             <p>MƏHDUD SAYDA</p>
           </div>
-          <div className="flex flex-col w-[90%] gap-[20px]">
-            <button className="bg-[#212D4A] text-white py-3 px-7 text-xl" onClick={handleAddToCard} disabled={addCard.some((item) => item.id === product.id)}>
-              Səbətə əlavə et
+          <div className="flex flex-col w-full md:w-[90%] gap-[20px]">
+            {/* Səbətə əlavə et */}
+            <button 
+              className={`py-3 px-7 text-xl ${isInCart ? 'bg-green-400' : 'bg-[#212D4A]'} text-white`} 
+              onClick={handleAddToCard} 
+              disabled={isInCart}
+            >
+              {isInCart ? "Səbətə əlavə olundu" : "Səbətə əlavə et"}
             </button>
-            <button  className="text-[#212D4A] bg-gray-100 py-3 px-7 text-xl" onClick={handleAddToWishlist}
-              disabled={wishList.some((item) => item.id === product.id)}
-              >
-              <i className="fa-regular fa-heart pr-4"></i>Arzu olunanlara əlavə et
+            {/* Arzu olunanlara əlavə et */}
+            <button 
+              className={`py-3 px-7 text-xl ${isInWishlist ? 'bg-red-500 text-white' : 'text-[#212D4A] bg-gray-100'}`} 
+              onClick={handleAddToWishlist} 
+              disabled={isInWishlist}
+            >
+              <i className={`pr-4 ${isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'}`}></i>
+              {isInWishlist ? "Arzu olunanlardadır" : "Arzu olunanlara əlavə et"}
             </button>
           </div>
         </div>
       </div>
 
       {/* Product Information */}
-      <div className="w-[100%] flex items-center gap-5 mt-20">
-        <div className="border-[1px] border-[#e0e0e0] w-[36%] h-[250px] px-12 py-5">
+      <div className="w-full flex flex-wrap lg:flex-nowrap gap-5 mt-20">
+        <div className="border-[1px] border-[#e0e0e0] w-full md:w-[36%] h-[250px] px-12 py-5">
           <h1 className="text-[15px] font-bold  mb-4">MƏHSUL HAQQINDA ƏSAS MƏLUMAT</h1>
           <p className="text-[13px] mb-5">Məhsulun kodu: {product.sku}</p>
           <div className="text-[13px]">
@@ -168,18 +183,13 @@ function handleAddToCard() {
             <p>- {product.gender ? product.gender.title_az : "Cinsiyet bilgisi yok"}</p>
           </div>
         </div>
-        <div className="border-[1px] border-[#e0e0e0] w-[32%] h-[250px] px-12 py-5">
+        <div className="border-[1px] border-[#e0e0e0] w-full md:w-[32%] h-[250px] px-12 py-5">
           <h1 className="text-[15px] font-bold mb-5">MƏHSUL HAQQINDA ƏTRAFLI MƏLUMAT</h1>
         </div>
-        <div className="border-[1px] border-[#e0e0e0] w-[30%] px-12 py-5 h-[250px]">
-          <h1 className="text-[15px] font-bold mb-5">Seçilmiş parametrlər</h1>
-          <div className="text-[14px]">
-            <p>- Ölçü: {product.variations[0].size.title_az || "No size"}</p>
-            <p>- Rəng: {product.variations[0].color.title_az || "No color"}</p>
-          </div>
+        <div className="border-[1px] border-[#e0e0e0] w-full md:w-[30%] px-12 py-5 h-[250px]">
+          <h1 className="text-[15px] font-bold mb-4">MƏHSUL HAQQINDA YORUMLAR</h1>
         </div>
       </div>
     </div>
   );
 }
-

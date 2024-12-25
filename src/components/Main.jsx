@@ -4,40 +4,31 @@ import { Carousel } from "antd";
 import 'slick-carousel/slick/slick.css'; 
 import 'slick-carousel/slick/slick-theme.css';
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "./store/categoryProduct";
+import { addToWishlist } from "./store/categoryProduct";
+import { notification } from "antd";
 
 export default function Main() {
     const [campaigns, setCampaings] = useState([]);
     const [trend, setTrend] = useState([]);
     const dispatch = useDispatch();
-    const selectedCategoryId = useSelector((state) => state.category.selectedCategoryId);
+    
+    const calculateTimeLeft = () => {
+        const now = new Date();
+        const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59);
+        const difference = endOfYear - now;
+        return difference > 0 ? Math.floor(difference / 1000) : 0;
+    };
 
-    const [timeLeft, setTimeLeft] = useState(30 * 24 * 60 * 60);
-
-    async function getTrendProduct() {
-        let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
-        let trendProduct = data.trend_products;
-        setTrend(trendProduct);
-    }
-
-    async function getCampaings() {
-        let data = await fetch('https://test.mybrands.az/api/v1/campaigns').then(res => res.json());
-        setCampaings(data);
-    }
+    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
 
     useEffect(() => {
-        getCampaings();
-        getTrendProduct();
-    }, []);
+        if (timeLeft <= 0) return;
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            if (timeLeft > 0) {
-                setTimeLeft(timeLeft - 1);
-            }
+        const timer = setInterval(() => {
+            setTimeLeft(calculateTimeLeft);
         }, 1000);
 
-        return () => clearTimeout(timer);
+        return () => clearInterval(timer);
     }, [timeLeft]);
 
     const formatTime = (time) => {
@@ -46,88 +37,126 @@ export default function Main() {
         const minutes = Math.floor((time % (60 * 60)) / 60);
         const seconds = time % 60;
         return (
-            <span>
-                <span className="text-5xl font-bold mr-2 text-red-700">{days}</span><span className="text-sm">Gün</span> 
-                <span className="text-5xl font-bold mx-2 text-red-700">{hours}</span><span className="text-sm">Saat</span> 
-                <span className="text-5xl font-bold mx-2 text-red-700">{minutes}</span><span className="text-sm">Dəq</span> 
-                <span className="text-5xl font-bold ml-2 text-red-700">{seconds}</span><span className="text-sm">San</span>
+            <span className="flex flex-wrap justify-center items-end text-center">
+                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{days}</span>
+                <span className="text-sm sm:text-base text-black font-bold mr-4">Gün</span>
+                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{hours}</span>
+                <span className="text-sm sm:text-base text-black font-bold mr-4">Saat</span>
+                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{minutes}</span>
+                <span className="text-sm sm:text-base text-black font-bold mr-4">Dəq</span>
+                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{seconds}</span>
+                <span className="text-sm sm:text-base text-black font-bold">San</span>
             </span>
         );
     };
 
+    async function getTrendProduct() {
+        let data = await fetch('https://test.mybrands.az/api/v1/products/top-sale-trend-products/').then(res => res.json());
+        setTrend(data.trend_products || []);
+    }
+
+    async function getCampaings() {
+        let data = await fetch('https://test.mybrands.az/api/v1/campaigns').then(res => res.json());
+        setCampaings(data || []);
+    }
+
+    useEffect(() => {
+        getCampaings();
+        getTrendProduct();
+    }, []);
+
+    const wishlist = useSelector(state => state.category.wishlist);  // Use Redux state for wishlist
+
+    const handleAddToWishlist = (item) => {
+        if (!wishlist.some((product) => product.id === item.id)) {
+            dispatch(
+                addToWishlist({
+                    id: item.id,
+                    title: item.product.title_az,
+                    image: `https://test.mybrands.az${item.image.items[0].file}`,
+                    price: item.price,
+                })
+            );
+            notification.success({
+                message: "Uğurlu əməliyyat",
+                description: "Məhsul favoritlərə əlavə edildi!",
+                placement: "topRight",
+            });
+        }
+    };
+
+    const isItemInWishlist = (item) => wishlist.some((product) => product.id === item.id);
+
     return (
         <>
             <Carousel arrows dots autoplay autoplaySpeed={2000} className="w-[85%] m-auto">
-                {campaigns && campaigns.map((item, index) => (
+                {campaigns.map((item, index) => (
                     <img
                         src={item.cover_photo_az}
                         key={index}
-                        className="width-[20%] height: auto maxHeight:200px"
+                        className="w-full object-cover rounded-lg"
+                        alt={`Campaign ${index + 1}`}
                     />
                 ))}
             </Carousel>
+        
             <div className="w-[85%] m-auto font-montserrat">
-                <div>
-                    <h1 className="text-[#131E38] text-3xl font-bold my-10">HAZIRDA TREND</h1>
-                </div>
-                <div className="relative">
-                    <div className="grid grid-cols-4 gap-5 mb-10">
-                        {trend &&
-                            trend.map((item, index) => (
-                                <div key={index} className=" border-gray-200 border-2 rounded-lg cursor-pointer">
-                                    <div className="relative">
-                                        <img
-                                            src={`https://test.mybrands.az${item.image.items[0].file}`}
-                                            className=" w-full h-[300px] rounded-lg"
-                                            alt="Trend Ürün"
-                                        />
-                                        <i className="fa-regular fa-heart cursor-pointer absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-[999px] hover:scale-110 hover:shadow-gray-500 hover:shadow-lg transition-transform duration-300 ease-in-out"></i>
-                                    </div>
-                                    <div className="flex flex-col pl-5">
-                                    <p className="text-[17px] text-gray-500 mt-4 mb-6">{item.product.title_az}</p>
-                                    <p className="text-lg font-bold">{item.price} AZN</p>
-                                    </div>
-                                </div>
-                            ))}
-                    </div>
-                </div>
-            </div>
-            <div className="w-[85%] m-auto flex rounded-3xl">
-                <div className="w-[35%]">
-                    <img src="./src/image/sport.png" className="w-full " alt="shoes" />
-                </div>
-                <div className="bg-gray-50 text-center flex flex-col items-center w-[65%]">
-                    <div className="bg-white rounded-full w-[40%] py-[95px] mt-5">
-                        <span className="text-2xl font-bold">Endirim</span>
-                        <h1 className="text-[40px] text-red-600 font-bold mb-3">Bayram 2025</h1>
-                        <span className="text-2xl font-bold">Satış 50%</span>
-                    </div>
-                    <div className="mt-10">
-                        <p>{formatTime(timeLeft)}</p>
-                    </div>
+                <h1 className="text-[#131E38] text-2xl sm:text-3xl font-bold my-6">HAZIRDA TREND</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-10">
+                    {trend.map((item, index) => (
+                        <div key={index} className="border-gray-200 border-2 rounded-lg group">
+                            <div className="relative overflow-hidden group cursor-pointer">
+                                <img
+                                    src={`https://test.mybrands.az${item.image.items[0].file}`}
+                                    className="w-full h-[200px] sm:h-[250px] lg:h-[300px] rounded-t-lg object-cover transition-transform duration-700 ease-in-out transform group-hover:scale-110"
+                                    alt="Trend Product"
+                                />
+                                <i
+                                    onClick={() => handleAddToWishlist(item)}
+                                    className={`fa-regular fa-heart absolute bottom-3 left-4 text-xl bg-gray-100 py-1 px-2 rounded-full transition-transform ${
+                                        isItemInWishlist(item) ? 'text-white bg-red-500' : 'text-gray-500'
+                                    } hover:scale-110`}
+                                ></i>
+                            </div>
+                            <div className="p-4">
+                                <p className="text-sm sm:text-base lg:text-lg text-gray-500">{item.product.title_az}</p>
+                                <p className="text-sm sm:text-lg font-bold">{item.price} AZN</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div className="w-[85%] m-auto flex justify-between items-center text-center bg-gray-50 p-11 mt-10 mb-10 rounded-xl">
-               <div className="flex flex-col gap-1 border-r-2 border-gray-200 pr-[40px]">
-               <i class="fa-solid fa-truck text-3xl"></i>
-               <span className="font-bold">Sürətli və Pulsuz Çatdırılma</span>
-               <span className="text-[13px] text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
-               </div>
-               <div className="flex flex-col gap-1 border-r-2 border-gray-200 pr-[40px]">
-               <i class="fa-solid fa-credit-card text-3xl"></i>
-               <span className="font-bold">Təhlükəsiz Ödəniş</span>
-               <span className="text-[13px] text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
-               </div>
-               <div className="flex flex-col gap-1 border-r-2 border-gray-200 pr-[40px]">
-               <i class="fa-solid fa-money-bill text-3xl"></i>
-               <span className="font-bold">Pul Geri Zəmanət</span>
-               <span className="text-[13px] text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
-               </div>
-               <div className="flex flex-col gap-1 ">
-               <i class="fa-solid fa-comments text-3xl"></i>
-               <span className="font-bold">Onlayn Dəstək</span>
-               <span className="text-[13px] text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
-               </div>
+        
+            <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh]">
+                <video src="./src/assets/audio/snow.mp4" autoPlay loop muted className="w-full h-full object-cover" />
+                <div className="absolute top-[30%] left-[5%] bg-white bg-opacity-75 py-10 px-6 rounded-lg max-w-lg sm:max-w-md md:max-w-lg lg:max-w-2xl w-[90%] sm:w-[50%] lg:w-[32%]">
+                    <h1 className="text-xl font-black text-red-700 mb-2 sm:text-3xl lg:text-4xl text-center">BAYRAM ENDİRİMİ</h1>
+                    <p className="text-2xl text-red-700 font-black mb-4 sm:text-3xl lg:text-4xl text-center">50%</p>
+                    <div className="text-sm sm:text-lg">{formatTime(timeLeft)}</div>
+                </div>
+            </div>
+        
+            <div className="w-[85%] m-auto flex flex-col sm:flex-row justify-between items-center text-center bg-gray-50 p-8 mt-8 rounded-xl shadow-lg gap-5">
+                <div className="flex flex-col items-center gap-1 sm:border-r-2 sm:pr-[40px]">
+                    <i className="fa-solid fa-truck text-2xl"></i>
+                    <span className="font-black text-sm">Sürətli və Pulsuz Çatdırılma</span>
+                    <span className="text-xs text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 sm:border-r-2 sm:pr-[40px]">
+                    <i className="fa-solid fa-credit-card text-2xl"></i>
+                    <span className="font-black text-sm">Təhlükəsiz Ödəniş</span>
+                    <span className="text-xs text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 sm:border-r-2 sm:pr-[40px]">
+                    <i className="fa-solid fa-money-bill text-2xl"></i>
+                    <span className="font-black text-sm">Pul Geri Zəmanət</span>
+                    <span className="text-xs text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                    <i className="fa-solid fa-comments text-2xl"></i>
+                    <span className="font-black text-sm">Onlayn Dəstək</span>
+                    <span className="text-xs text-gray-400">Bütün sifarişlərdə pulsuz çatdırılma</span>
+                </div>
             </div>
         </>
     );
