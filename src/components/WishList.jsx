@@ -23,7 +23,7 @@ export default function WishList() {
         <p className="text-[#131E38] text-[27px] lg:text-[40px] font-bold">Arzuolunanlar siyahınız boşdur</p>
         <p className="text-[17px]">Məhsulu seçin</p>
         <button
-          className="bg-[#131E38] min-w-[250px] sm:w-[39%] p-[1rem] text-white text-[13px] font-semibold"
+          className="bg-[#131E38] min-w-[250px] sm:w-[39%] p-[1rem] text-white text-[13px] lg:text-[17px] font-semibold"
           onClick={navigateMain}
         >
           Ana səhifəyə keçin

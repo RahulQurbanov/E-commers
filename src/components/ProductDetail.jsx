@@ -31,6 +31,8 @@ export default function ProductDetail() {
       }
       const data = await response.json();
       setProduct(data);
+      console.log("detail",data)
+  
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -178,16 +180,23 @@ export default function ProductDetail() {
           <h1 className="text-[15px] font-bold  mb-4">MƏHSUL HAQQINDA ƏSAS MƏLUMAT</h1>
           <p className="text-[13px] mb-5">Məhsulun kodu: {product.sku}</p>
           <div className="text-[13px]">
-            <p>- {product.category ? product.category.title_az : "Kategori bilgisi yok"}</p>
-            <p>- Çanta və aksesuarlar</p>
+            <p>- {product.category ? product.category[1].title_az : "Kategori bilgisi yok"}</p>
+            <p>- {product.categories[0].title_az}</p>
             <p>- {product.gender ? product.gender.title_az : "Cinsiyet bilgisi yok"}</p>
+          </div>
+        </div>
+        <div className="border-[1px] border-[#e0e0e0] w-full md:w-[30%] px-12 py-5 h-[250px]">
+          <h1 className="text-[15px] font-bold mb-4">MƏHSUL HAQQINDA YORUMLAR</h1>
+          <div className="text-[13px]">
+            <p>- Mehsul haqqında şərh yoxdur</p>
           </div>
         </div>
         <div className="border-[1px] border-[#e0e0e0] w-full md:w-[32%] h-[250px] px-12 py-5">
           <h1 className="text-[15px] font-bold mb-5">MƏHSUL HAQQINDA ƏTRAFLI MƏLUMAT</h1>
-        </div>
-        <div className="border-[1px] border-[#e0e0e0] w-full md:w-[30%] px-12 py-5 h-[250px]">
-          <h1 className="text-[15px] font-bold mb-4">MƏHSUL HAQQINDA YORUMLAR</h1>
+          <div className="text-[13px]">
+            <p>- {product.title_az}</p>
+            <p>- {product.season.title}</p>
+          </div>
         </div>
       </div>
     </div>

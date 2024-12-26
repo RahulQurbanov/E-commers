@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -45,6 +46,11 @@ export default function Login() {
   const navigate = useNavigate(); 
   function getMain(){
     navigate("/");
+    notification.success({
+      message: "Uğurlu əməliyyat",
+      description: "Qeydiyyat uğurlu oldu!",
+      placement: "topRight",
+    });
   }
 
   const isLogged = useSelector(state => state.auth.isLogged);
@@ -81,7 +87,7 @@ console.log(JSON.stringify(authData))
 
   return (
     <div className="bg-no-repeat bg-cover flex items-center justify-center font-montserrat">
-    <div className="w-full sm:w-[60%] md:w-[50%] lg:w-[40%] m-auto px-6 py-5 my-10 bg-gray-100 rounded-lg">
+    <div className="w-full sm:w-[60%] md:w-[50%] lg:w-[40%] m-auto px-6 py-5 my-10 shadow-2xl rounded-lg">
       <div className="flex justify-center items-center text-lg cursor-pointer w-full">
         <p
           className={`${login ? 'text-white bg-cyan-950' : 'text-black bg-white'} py-4 px-6 sm:px-[30px]`}
@@ -100,7 +106,6 @@ console.log(JSON.stringify(authData))
       {signUp && (
         <div>
           <div className="flex justify-center items-center mt-7">
-            <h1 className="text-3xl font-bold">Qoşulun</h1>
           </div>
   
           <div className="flex justify-center items-center text-lg cursor-pointer mt-7">

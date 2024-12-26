@@ -28,7 +28,7 @@ export default function AddToCard() {
         <p className="text-[#131E38] text-[16px] sm:text-[32px] md:text-[40px] font-bold">Card siyahınız boşdur</p>
         <p className="text-[15px] sm:text-[16px] md:text-[17px]">Məhsulu seçin</p>
         <button
-          className="bg-[#131E38] min-w-[250px] sm:w-[39%] p-[1rem] text-white text-[13px] font-semibold"
+          className="bg-[#131E38] min-w-[250px] sm:w-[39%] p-[1rem] text-white text-[13px] lg:text- font-semibold"
           onClick={navigateMain}
         >
           Ana səhifəyə keçin
