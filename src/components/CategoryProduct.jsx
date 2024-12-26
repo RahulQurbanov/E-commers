@@ -1,14 +1,11 @@
-import Item from "antd/es/list/Item";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist, setCategoryId, setProductId } from "./store/categoryProduct";
 import { setProductImage } from "./store/categoryProduct";
-import { notification } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export default function CategoryProduct() {
   const [displayPrice, setDisplayPrice] = useState(true);
-  const [displaySize, setDisplaySize] = useState(true);
   const [categoryClick, setCategoryClick] = useState([]);
   const [categoryLength, setCategoryLength] = useState(0);
   const selectedCategoryId = useSelector((state) => state.category.selectedCategoryId);
@@ -18,19 +15,15 @@ export default function CategoryProduct() {
     let data = await fetch(`https://test.mybrands.az/api/v1/products/?categories=${selectedCategoryId}`).then(res => res.json());
     setCategoryLength(data.results.length);
     setCategoryClick(data.results || []);
-    console.log("product", data)
   }
 
-  //! Filter
   const [filterCategory, setFilterCategory] = useState([]);
 
   async function getFilterCategory() {
     let data = await fetch('https://test.mybrands.az/api/v1/products/filter-items').then(res => res.json());
     setFilterCategory(data);
-    console.log("FilterCategory", data);
   }
 
-  //! Filter Price
   const [price, setPrice] = useState([]);
 
   async function getPrice(minPrice = 0, maxPrice = 100) {
@@ -74,7 +67,6 @@ export default function CategoryProduct() {
     handleCustomPriceChange(minPrice, value);
   };
 
-  //! Filter Size
   const [categoryProductId, setCategoryProductId] = useState([]);
   const [categoryId, setCategoryId] = useState();
 
@@ -112,29 +104,11 @@ export default function CategoryProduct() {
     navigate("/product-detail");
   }
 
-  function handleAddToWishlist(item) {
-    if (!wishList.some((product) => product.id === item.id)) {
-      dispatch(
-        addToWishlist({
-          id: item.id,
-          title: item.product.title_az,
-          image: `https://test.mybrands.az${item.image.items[0].file}`,
-          price: item.price,
-        })
-      );
-      notification.success({
-        message: "Uğurlu əməliyyat",
-        description: "Məhsul favoritlərə əlavə edildi!",
-        placement: "topRight",
-      });
-    }
-  }
 
   return (
     <div className="w-[85%] m-auto flex flex-col gap-10">
-    {/* Qiymət və Axtarış bölmələri */}
     <div className="flex flex-col lg:flex-row lg:justify-between gap-10 w-full">
-      {/* Qiymət Filtri */}
+
       <div className="w-full lg:w-[30%] sm:w-full gap-[.5px] mt-3">
         <div className="border-[1px] border-gray-200 px-5">
           <div
@@ -188,15 +162,8 @@ export default function CategoryProduct() {
           </div>
         </div>
       </div>
-  
-      {/* Axtarış */}
-      <div className="flex gap-7 items-center  border-gray-200 rounded-sm py-1 px-2 w-full lg:w-[30%] sm:w-full">
-        <input type="text" className="bg-gray-100 py-3 px-7 outline-none w-full" />
-        <i className="fa-solid fa-magnifying-glass text-gray-500 cursor-pointer text-lg"></i>
-      </div>
     </div>
-  
-    {/* Məhsullar */}
+
     <div className="w-full m-auto text-[15px]">
       <div className="flex justify-between items-center mb-5">
         <div className="mt-5 m-auto">
@@ -207,7 +174,7 @@ export default function CategoryProduct() {
         {categoryLength > 0 ? (
           categoryClick.map((item, index) => (
             <div className="border-[1px] border-gray-300 rounded-lg shadow-sm relative group" key={index}>
-              <div className="relative overflow-hidden group cursor-pointer">
+              <div className="relative overflow-hidden object-cover group cursor-pointer">
                 <img
                   onClick={() => getProductDetailId(item.product.id, item.image.items[0].file)}
                   src={item.image.items[0].file}

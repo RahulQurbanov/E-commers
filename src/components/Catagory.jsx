@@ -48,7 +48,6 @@ export default function Catagory() {
     return (
         <div className="border-b-2 border-b-gray-200 font-montserrat">
         <div className="w-[85%] m-auto relative overflow-visible">
-            {/* Böyük ekranlar */}
             <div className="hidden sm:block">
                 <ul className="flex flex-wrap items-center gap-5 pt-5 text-slate-950 cursor-pointer font-semibold">
                     <div 
@@ -134,32 +133,26 @@ export default function Catagory() {
                 </ul>
             </div>
     
-            {/* Kiçik ekranlar */}
             <div className="block sm:hidden">
-      {/* Kateqoriya Seçimi */}
-      <select 
-        onChange={(e) => {
-          const selectedCategory = e.target.value;
-          setSelectedCategory(selectedCategory); // Seçilən kateqoriyanı təyin edirik
-        }} 
-        className="w-full p-3 border rounded"
-      >
-        <option value="" selected>
-          Kateqoriya seçin
-        </option>
-        {/* Geyimlər Kateqoriyası */}
-        <option value="clothes">Geyimlər</option>
-        {/* Ayaqqabılar Kateqoriyası */}
-        <option value="shoes">Ayaqqabılar</option>
-        {/* Çanta və Aksesuarlar Kateqoriyası */}
-        <option value="bags">Çanta və Aksesuarlar</option>
-        {/* Gözəllik Kateqoriyası */}
-        <option value="beauty">Gözəllik</option>
-        {/* Ev Kateqoriyası */}
-        <option value="home">Ev</option>
-      </select>
+            <select 
+    defaultValue="kateqoriya"
+    onChange={(e) => {
+        const selectedCategory = e.target.value;
+        setSelectedCategory(selectedCategory);
+    }} 
+    className="w-full p-3 border rounded"
+>
+    <option value="kateqoriya">
+        Kateqoriya seçin
+    </option>
+    <option value="clothes">Geyimlər</option>
+    <option value="shoes">Ayaqqabılar</option>
+    <option value="bags">Çanta və Aksesuarlar</option>
+    <option value="beauty">Gözəllik</option>
+    <option value="home">Ev</option>
+</select>
 
-      {/* Seçilən Kateqoriyanın Alt Kateqoriyaları */}
+
       {selectedCategory && (
         <ul className="mt-4 space-y-2">
           {selectedCategory === "clothes" && clothes.map((item, index) => (
@@ -210,10 +203,7 @@ export default function Catagory() {
         </ul>
       )}
     </div>
-
         </div>
     </div>
-    
-    
     );
 }

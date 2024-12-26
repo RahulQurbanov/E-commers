@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -45,39 +45,23 @@ export default function Login() {
   }
   const navigate = useNavigate(); 
   function getMain(){
-    navigate("/");
     notification.success({
       message: "Uğurlu əməliyyat",
       description: "Qeydiyyat uğurlu oldu!",
       placement: "topRight",
     });
+    
+    navigate("/");
   }
 
-  const isLogged = useSelector(state => state.auth.isLogged);
+  // const isLogged = useSelector(state => state.auth.isLogged);
   const [authEmail,setAuthEmail] = useState();
   const [authPassword,setAuthPassword] = useState();
   const authData = {
     "email":authEmail,
     "password":authPassword
   };
-console.log(JSON.stringify(authData))
-  
-
-  const Login = async() =>{
-    const response =await fetch("https://test.mybrands.az/api/v1/auth/login",{
-      method:"POST",
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify(authData)
-    }).then(res => res.json())
     
-    console.log(response)
-  }
-  const Logout =() =>{
-
-  }
-  
   function handleChangeEmail(event){
     setAuthEmail(event.target.value);
   }

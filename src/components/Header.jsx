@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 export default function Header() {
     const navigate = useNavigate();
     const wishlist = useSelector((state) => state.category.wishlist);
@@ -21,7 +22,6 @@ export default function Header() {
     }
     return (
         <div>
-        {/* Üst Panel */}
         <div className="bg-black text-white py-2">
           <div className="w-[85%]  m-auto flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-5 text-[10px] sm:text-[12px]">
@@ -39,13 +39,13 @@ export default function Header() {
           </div>
         </div>
       
-        {/* Logo və Funksiyalar */}
+
         <div className="border-b-2 border-gray-200 bg-white">
           <div className="w-[85%] m-auto flex flex-wrap justify-between items-center py-3 gap-4">
             <div onClick={getMain} className="flex items-center gap-5 cursor-pointer text-center">
               <h1 className="text-2xl sm:text-3xl font-black text-[#002244]">SHOPLAND</h1>
             </div>
-            <div className="flex flex-wrap items-center gap-5 sm:gap-10">
+            <div className="flex  flex-wrap items-center gap-5 sm:gap-10">
               <div className="flex items-center gap-5 sm:gap-7 border-r-2 border-gray-200 pr-5">
                 <div className="relative" onClick={getWishList}>
                   <span className="absolute left-5 bottom-4 bg-[#717fe0] text-white text-[8px] sm:text-[11px] px-2 py-1 rounded-full">

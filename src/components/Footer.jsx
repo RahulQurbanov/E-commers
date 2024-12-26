@@ -21,24 +21,24 @@ export default function Footer(){
             </p>
           </div>
           <div className="flex flex-col lg:flex-row items-center gap-6 relative text-base lg:text-lg">
-            <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-5">
+            {/* <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-5">
               <p className="text-gray-400">Bizi izləyin</p>
               <p className="pb-3">__</p>
-            </div>
-            <div className="flex items-center gap-5 lg:gap-7 pb-[15px]">
-              <a href="https://www.facebook.com/mybrands.az/">
+            </div> */}
+            <div className="flex items-center gap-5 lg:gap-7 sm:text-[20px] pb-[15px]">
+              <a href="#">
                 <i className="fa-brands fa-facebook-f hover:scale-125"></i>
               </a>
-              <a href="https://www.instagram.com/mybrands.az/">
+              <a href="#">
                 <i className="fa-brands fa-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/company/novco-group-of-companies?originalSubdomain=ru">
+              <a href="#">
                 <i className="fa-brands fa-linkedin-in"></i>
               </a>
-              <a href="https://www.youtube.com/user/MYBRANDS1TV">
+              <a href="#">
                 <i className="fa-brands fa-youtube"></i>
               </a>
-              <a href="https://www.tiktok.com/@mybrands.az">
+              <a href="#">
                 <i className="fa-brands fa-tiktok"></i>
               </a>
             </div>
@@ -46,7 +46,7 @@ export default function Footer(){
         </div>
       </div>
     
-      <div className="w-[90%] lg:w-[85%] m-auto flex flex-col lg:flex-row justify-between mt-12 text-white gap-10 lg:gap-0">
+      <div className="w-[90%] lg:w-[85%] m-auto flex flex-col sm:flex-row  lg:flex-row justify-between mt-12 text-white gap-10 lg:gap-0">
         <div className="flex flex-col">
           <h2 className="text-lg font-bold mb-5">Şirkət</h2>
           <a href="#">
@@ -86,15 +86,15 @@ export default function Footer(){
             <p className="text-[#b2b2b2] text-sm">Online mağaza</p>
           </div>
           <div>
-            <p className="w-full lg:w-[340px] text-[#b2b2b2] text-[12px]">
+            <p className=" sm:w-[240px] lg:w-[340px] text-[#b2b2b2] text-[12px]">
               Müştəri xidmətləri mərkəzimizlə hər gün 09:00 - 18:00-dək əlaqə saxlaya bilərsiniz.
             </p>
           </div>
         </div>
       </div>
     
-      <div className="w-[90%] lg:w-[85%] m-auto flex flex-col lg:flex-row items-center gap-5 lg:gap-8 mt-7 border-b-2 border-b-gray-200 pb-10">
-        <div className="flex items-center gap-3 bg-gray-100 w-full lg:w-[140px] py-2 px-5 rounded-sm text-center">
+      <div className="w-[90%] lg:w-[85%] m-auto flex flex-col sm:flex-row lg:flex-row  gap-5 lg:gap-8 mt-7 border-b-2 border-b-gray-200 pb-10">
+        <div className="flex items-center gap-3 bg-gray-100  w-[150px] py-2 px-5 rounded-sm text-center">
           <div>
             <i className="fa-brands fa-apple text-3xl"></i>
           </div>
@@ -103,7 +103,7 @@ export default function Footer(){
             <h2 className="text-[12px] font-bold">App Store</h2>
           </div>
         </div>
-        <div className="flex items-center gap-3 bg-gray-100 w-full lg:w-[150px] py-2 px-5 rounded-sm text-center">
+        <div className="flex items-center gap-3 bg-gray-100 w-[150px] py-2 px-5 rounded-sm text-center">
           <div>
             <i className="fa-brands fa-google-play text-2xl"></i>
           </div>

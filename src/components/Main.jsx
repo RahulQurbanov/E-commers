@@ -38,13 +38,13 @@ export default function Main() {
         const seconds = time % 60;
         return (
             <span className="flex flex-wrap justify-center items-end text-center">
-                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{days}</span>
+                <span className="text-xl sm:text-3xl font-bold mr-1 text-red-700">{days}</span>
                 <span className="text-sm sm:text-base text-black font-bold mr-4">Gün</span>
-                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{hours}</span>
+                <span className="text-xl sm:text-3xl font-bold mr-1 text-red-700">{hours}</span>
                 <span className="text-sm sm:text-base text-black font-bold mr-4">Saat</span>
-                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{minutes}</span>
+                <span className="text-xl sm:text-3xl font-bold mr-1 text-red-700">{minutes}</span>
                 <span className="text-sm sm:text-base text-black font-bold mr-4">Dəq</span>
-                <span className="text-2xl sm:text-4xl font-bold mr-1 text-red-700">{seconds}</span>
+                <span className="text-xl sm:text-3xl font-bold mr-1 text-red-700">{seconds}</span>
                 <span className="text-sm sm:text-base text-black font-bold">San</span>
             </span>
         );
@@ -65,8 +65,7 @@ export default function Main() {
         getTrendProduct();
     }, []);
 
-    const wishlist = useSelector(state => state.category.wishlist);  // Use Redux state for wishlist
-
+    const wishlist = useSelector(state => state.category.wishlist); 
     const handleAddToWishlist = (item) => {
         if (!wishlist.some((product) => product.id === item.id)) {
             dispatch(
@@ -127,11 +126,11 @@ export default function Main() {
                 </div>
             </div>
         
-            <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh]">
+            <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[60vh] lg:h-[80vh] 2xl:h-[70vh]">
                 <video src="./src/assets/audio/snow.mp4" autoPlay loop muted className="w-full h-full object-cover" />
-                <div className="absolute top-[30%] left-[5%] bg-white bg-opacity-75 py-10 px-6 rounded-lg max-w-lg sm:max-w-md md:max-w-lg lg:max-w-2xl w-[90%] sm:w-[50%] lg:w-[32%]">
-                    <h1 className="text-xl font-black text-red-700 mb-2 sm:text-3xl lg:text-4xl text-center">BAYRAM ENDİRİMİ</h1>
-                    <p className="text-2xl text-red-700 font-black mb-4 sm:text-3xl lg:text-4xl text-center">50%</p>
+                <div className="absolute top-[30%] left-[5%] bg-white bg-opacity-75 py-10 px-6 rounded-lg max-w-[300px] sm:max-w-md md:max-w-lg lg:max-w-2xl w-[90%] sm:w-[50%] lg:w-[35%] 2xl:w-[40%]">
+                    <h1 className="text-xl font-black text-red-700 mb-2 sm:text-2xl lg:text-3xl 2xl:text-4xl text-center">BAYRAM ENDİRİMİ</h1>
+                    <p className="text-xl text-red-700 font-black mb-4 sm:text-2xl lg:text-3xl 2xl:text-4xl text-center">50%</p>
                     <div className="text-sm sm:text-lg">{formatTime(timeLeft)}</div>
                 </div>
             </div>

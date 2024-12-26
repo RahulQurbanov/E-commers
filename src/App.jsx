@@ -24,7 +24,7 @@ function App() {
   ]);
 
   return (
-    <RouterProvider router={router} />  // RouterProvider ilə sarmalama
+    <RouterProvider router={router} /> 
   );
 }
 
