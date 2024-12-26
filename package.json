@@ -7,8 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "dependency_installation": "npm install"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
@@ -18,16 +17,18 @@
     "@reduxjs/toolkit": "^2.3.0",
     "antd": "^5.22.5",
     "dom": "^0.0.3",
+    "gh-pages": "^6.2.0",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-image-magnify": "^2.1.1",
     "react-medium-image-zoom": "^5.2.11",
     "react-redux": "^9.1.2",
-    "react-router": "^6.28.0",
-    "react-router-dom": "^6.28.1",
+    "react-router": "^6.28.1",
+    "react-router-dom": "^7.1.1",
     "react-slick": "^0.30.3",
     "router": "^2.0.0",
+    "router-dom": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.14"
   },

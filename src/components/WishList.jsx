@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromWishlist } from "./store/categoryProduct";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function WishList() {
   const wishlist = useSelector((state) => state.category.wishlist);

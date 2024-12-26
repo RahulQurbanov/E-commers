@@ -13,7 +13,7 @@ function App() {
       path: "/",
       element: <MainLayout />,
       children: [
-        { path: "/", element: <Main/> },
+        { path: "/", element: <Main /> },
         { path: "/login", element: <Login /> },
         { path: "/category-product", element: <CategoryProduct /> },
         { path: "/wishlist", element: <WishList /> },
@@ -23,7 +23,9 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} />  // RouterProvider ilə sarmalama
+  );
 }
 
 export default App;

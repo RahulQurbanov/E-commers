@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, removeFromCard } from "./store/categoryProduct";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function AddToCard() {
   const addToCard = useSelector(state => state.category.addcard);

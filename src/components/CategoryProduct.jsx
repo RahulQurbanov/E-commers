@@ -1,10 +1,10 @@
 import Item from "antd/es/list/Item";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { addToWishlist, setCategoryId, setProductId } from "./store/categoryProduct";
 import { setProductImage } from "./store/categoryProduct";
 import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function CategoryProduct() {
   const [displayPrice, setDisplayPrice] = useState(true);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
 import { setCategoryId } from "./store/categoryProduct";
+import { useNavigate } from "react-router-dom";
 
 export default function Catagory() {
     const [hover, setHover] = useState(false);

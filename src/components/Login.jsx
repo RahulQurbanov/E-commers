@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [day, setDay] = useState("");

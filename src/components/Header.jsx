@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-
+import { useNavigate } from "react-router-dom";
 export default function Header() {
     const navigate = useNavigate();
     const wishlist = useSelector((state) => state.category.wishlist);
