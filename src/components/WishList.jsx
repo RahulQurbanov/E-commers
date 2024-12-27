@@ -20,7 +20,7 @@ export default function WishList() {
     {wishlist.length === 0 ? (
       <div className="flex justify-center items-center flex-col p-24 gap-5 text-center">
         <i className="fa-regular fa-heart cursor-pointer text-[40px] bg-white py-6 px-7 rounded-[999px] text-gray-300 mb-7"></i>
-        <p className="text-[#131E38] text-[27px] lg:text-[40px] font-bold">Arzuolunanlar siyahınız boşdur</p>
+        <p className="text-[#131E38] text-[21px] sm:text-[27px] lg:text-[40px] font-bold">Arzuolunanlar siyahınız boşdur</p>
         <p className="text-[17px]">Məhsulu seçin</p>
         <button
           className="bg-[#131E38] min-w-[250px] sm:w-[39%] p-[1rem] text-white text-[13px] lg:text-[17px] font-semibold"

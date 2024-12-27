@@ -178,6 +178,7 @@ export default function CategoryProduct() {
                 <img
                   onClick={() => getProductDetailId(item.product.id, item.image.items[0].file)}
                   src={item.image.items[0].file}
+                  loading="lazy"
                   className="w-full h-[300px] transition-transform duration-700 ease-in-out transform group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>

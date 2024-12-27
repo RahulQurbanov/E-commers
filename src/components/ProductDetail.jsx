@@ -30,9 +30,7 @@ export default function ProductDetail() {
         throw new Error("Ürün bilgisi alınamadı.");
       }
       const data = await response.json();
-      setProduct(data);
-      console.log("detail",data)
-  
+      setProduct(data);  
       const firstImage = data?.variations?.[0]?.image?.items?.[0]?.file || defaultImage;
       setMainImage(firstImage);
       setLoading(false);
@@ -129,7 +127,7 @@ export default function ProductDetail() {
 
     <div className="mt-6 flex flex-col items-center gap-6">
       <div className="flex flex-col gap-1">
-        <span className="text-2xl font-bold">{product.manufacturer.title}</span>
+        <span className="text-2xl font-bold text-center">{product.manufacturer.title}</span>
         <span className="text-[13px] text-gray-400 text-center font-light">
           {product.categories[0].title_az}
         </span>

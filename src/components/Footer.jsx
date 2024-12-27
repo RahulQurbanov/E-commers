@@ -21,10 +21,6 @@ export default function Footer(){
             </p>
           </div>
           <div className="flex flex-col lg:flex-row items-center gap-6 relative text-base lg:text-lg">
-            {/* <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-5">
-              <p className="text-gray-400">Bizi izləyin</p>
-              <p className="pb-3">__</p>
-            </div> */}
             <div className="flex items-center gap-5 lg:gap-7 sm:text-[20px] pb-[15px]">
               <a href="#">
                 <i className="fa-brands fa-facebook-f hover:scale-125"></i>
@@ -82,7 +78,7 @@ export default function Footer(){
             </a>
           </div>
           <div>
-            <h2 className="text-lg font-bold hover:underline cursor-pointer">+994504114114</h2>
+            <h2 className="text-lg font-bold hover:underline cursor-pointer">+9945041141</h2>
             <p className="text-[#b2b2b2] text-sm">Online mağaza</p>
           </div>
           <div>
