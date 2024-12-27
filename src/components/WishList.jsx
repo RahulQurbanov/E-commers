@@ -31,8 +31,8 @@ export default function WishList() {
       </div>
     ) : (
       <div className="p-4 flex gap-10 flex-wrap justify-center">
-        {wishlist.map((product) => (
-          <div className="flex flex-col items-center">
+        {wishlist.map((product,index) => (
+          <div key={index} className="flex flex-col items-center">
             <div className="relative">
               <img src={product.image} alt={product.title} className="w-[255px] h-80 object-cover" />
               <i className="fa-solid fa-trash absolute bottom-5 right-5 text-red-500 text-[20px] cursor-pointer" onClick={() => handleRemove(product.id)}></i>
